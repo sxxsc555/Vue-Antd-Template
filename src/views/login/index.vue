@@ -6,7 +6,7 @@
       @submit.prevent="handleSubmit"
     >
       <a-form-item>
-        <img src="../../assets/logo.svg" style="width: 50px;" />
+        <img src="../../assets/logo.svg" style="width: 50px;" >
         <h1 style="color: rgb(245, 245, 245);">Vue Antd Template</h1>
         <span style="float: right;line-height: 50px;">欢迎!</span>
       </a-form-item>
@@ -54,7 +54,7 @@
         <a-button type="link" class="login-form-forgot">
           忘记密码
         </a-button>
-        <a-button type="primary" html-type="submit" class="login-form-button" :loading="loading">
+        <a-button :loading="loading" type="primary" html-type="submit" class="login-form-button">
           登录
         </a-button>
       </a-form-item>
@@ -72,12 +72,13 @@ export default {
     }
   },
   beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'normal_login' });
+    this.form = this.$form.createForm(this, { name: 'normal_login' })
   },
   methods: {
     handleSubmit(e) {
       this.form.validateFields((err, values) => {
-        if(values) {
+        err && console.log(err)
+        if (values) {
           this.loading = true
           this.$store.dispatch('user/login', values)
             .then(() => {
@@ -108,6 +109,7 @@ export default {
   align-items: center;
   background-image: url(../../assets/images/background.jpg);
   background-size: cover;
+
   .login-form {
     width: 380px;
     min-width: 200px;
@@ -116,11 +118,13 @@ export default {
     border-radius: 8px;
     box-shadow: 0px 0px 5px #f0f1f2;
     background: rgba(255, 255, 255, 0.1);
+
     .login-form-forgot {
       float: right;
       line-height: 40px;
       padding-right: 0;
     }
+
     .login-form-button {
       width: 100%;
     }

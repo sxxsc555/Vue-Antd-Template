@@ -4,13 +4,13 @@
       <a-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
         <div class="box">
           <a-skeleton :loading="loading" active avatar>
-            <Project></Project>
+            <Project/>
           </a-skeleton>
         </div>
 
         <div class="box">
           <a-skeleton :loading="loading" active avatar>
-            <Bar1 :data="Bar1Data"></Bar1>
+            <Bar1 :data="Bar1Data"/>
           </a-skeleton>
         </div>
       </a-col>
@@ -18,13 +18,13 @@
       <a-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
         <div class="box">
           <a-skeleton :loading="loading" active avatar>
-            <Dynamic></Dynamic>
+            <Dynamic/>
           </a-skeleton>
         </div>
 
         <div class="box">
           <a-skeleton :loading="loading" active avatar>
-            <regShape></regShape>
+            <regShape/>
           </a-skeleton>
         </div>
       </a-col>
@@ -60,7 +60,7 @@ export default {
         { xAxis: '9月', yAxis: 50 },
         { xAxis: '10月', yAxis: 70 },
         { xAxis: '11月', yAxis: 90 },
-        { xAxis: '12月', yAxis: 100 },
+        { xAxis: '12月', yAxis: 100 }
       ]
     }
   },

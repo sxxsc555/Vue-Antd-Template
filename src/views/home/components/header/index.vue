@@ -9,13 +9,13 @@
 
       <div class="statistic-box">
         <div class="state-item">
-          <a-statistic title="点赞数" :value="6666" style="margin-right: 40px;">
+          <a-statistic :value="6666" title="点赞数" style="margin-right: 40px;">
             <template #suffix>
               <a-icon type="like" />
             </template>
           </a-statistic>
         </div>
-        <a-statistic title="比例" :value="80">
+        <a-statistic :value="80" title="比例">
           <template #suffix>
             <span> / 100</span>
           </template>
@@ -27,28 +27,28 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        text: ''
-      }
-    },
-    created() {
-      const NewTime = new Date()
-      const NewHours = NewTime.getHours()
-      if (NewHours > 5 && NewHours < 12) {
-        this.text = '上午好，打工人，来杯咖啡吧'
-      } else if (NewHours == 12) {
-        this.text = '中午好，打工人，干饭时间到'
-      } else if (NewHours > 12 && NewHours < 18) {
-        this.text = '下午好，打工人，休息一下吧'
-      } else if (NewHours > 17) {
-        this.text = '晚上好，打工人，游戏时间到'
-      } else {
-        this.text = '凌晨好，注意休息，别当夜猫哦'
-      }
-    },
+export default {
+  data() {
+    return {
+      text: ''
+    }
+  },
+  created() {
+    const NewTime = new Date()
+    const NewHours = NewTime.getHours()
+    if (NewHours > 5 && NewHours < 12) {
+      this.text = '上午好，打工人，来杯咖啡吧'
+    } else if (NewHours === 12) {
+      this.text = '中午好，打工人，干饭时间到'
+    } else if (NewHours > 12 && NewHours < 18) {
+      this.text = '下午好，打工人，休息一下吧'
+    } else if (NewHours > 17) {
+      this.text = '晚上好，打工人，游戏时间到'
+    } else {
+      this.text = '凌晨好，注意休息，别当夜猫哦'
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>

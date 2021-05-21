@@ -1,7 +1,7 @@
 <template>
-  <section class="Sidebar-container" :class="{ 'toggleSidebar': toggleSidebar }">
+  <section :class="{ 'toggleSidebar': toggleSidebar }" class="Sidebar-container">
     <header class="logo">
-      <img src="../../assets/logo.svg" />
+      <img src="../../assets/logo.svg" >
       <strong>Vue Antd Admin</strong>
     </header>
     <nav>
@@ -9,10 +9,10 @@
         :inline-collapsed="isCollapsed"
         :selected-keys="activeMenu"
         :default-open-keys="openKeys"
-        @openChange="onOpenChange"
-        @select="selectItem"
         style="height: 100%;position: absolute;"
         mode="inline"
+        @openChange="onOpenChange"
+        @select="selectItem"
       >
 
         <template v-for="route in routes">
@@ -21,7 +21,7 @@
             <!-- 只有一个菜单 -->
             <template v-if="route.children.length === 1">
               <a-menu-item :key="route.redirect">
-                <a-icon :type="route.children[0].meta.icon"></a-icon>
+                <a-icon :type="route.children[0].meta.icon"/>
                 <span class="spanStyle">{{ route.children[0].meta.title }}</span>
               </a-menu-item>
             </template>
@@ -30,12 +30,12 @@
             <template v-else>
               <a-sub-menu :key="route.path">
                 <span slot="title">
-                  <a-icon :type="route.meta.icon"></a-icon>
+                  <a-icon :type="route.meta.icon"/>
                   <span class="spanStyle">{{ route.meta.title }}</span>
                 </span>
                 <template v-for="child in route.children">
                   <a-menu-item :key="menuItemKey(route.path, child.path)">
-                    <a-icon :type="child.meta.icon"></a-icon>
+                    <a-icon :type="child.meta.icon"/>
                     <span>{{ child.meta.title }}</span>
                   </a-menu-item>
                 </template>
@@ -59,7 +59,6 @@ export default {
     return {
       toggleSidebar: false,
       rootSubmenuKeys: [],
-      lastPath: '',
       subMenuPath: '',
       openKeys: []
     }
@@ -94,7 +93,7 @@ export default {
         const Key = path.resolve(key1, key2)
         return Key
       }
-    },
+    }
   },
   watch: {
     $route() {
@@ -115,7 +114,7 @@ export default {
     // 只展开当前父级菜单
     onOpenChange(openKeys) {
       const latestOpenKey = openKeys.find((key) => this.openKeys.indexOf(key) === -1)
-      if(this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
         this.openKeys = openKeys
       } else {
         this.openKeys = latestOpenKey ? [latestOpenKey] : []
@@ -126,29 +125,6 @@ export default {
     selectItem({ key }) {
       // 跳转路由
       this.$router.push(key)
-    },
-
-    // 路由过滤器
-    hasOneShowChild(children = [], parent) {
-      const showingChildren = children.filter(item => {
-        if(item.hidden) {
-          return false
-        } else {
-          return true
-        }
-      })
-
-      if(showingChildren.length === 1) {
-        return true
-      }
-
-      if(showingChildren === 0) {
-        return false
-      }
-
-      if(showingChildren > 1) {
-        return false
-      }
     }
   }
 }
@@ -174,7 +150,7 @@ export default {
       margin: 8px;
       overflow: hidden;
       text-align: center;
-      
+
       img {
         width: 40px;
       }

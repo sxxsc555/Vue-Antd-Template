@@ -1,7 +1,7 @@
 <template>
   <section class="chart-container">
     <div class="chart-header">技术栈</div>
-    <div id="regShape-chart"></div>
+    <div id="regShape-chart"/>
   </section>
 </template>
 
@@ -74,8 +74,8 @@ export default {
             }
           })
           const chart = new Chart({
-            container: 'regShape-chart',  // 指定绘制chart的容器
-            autoFit: true,  // 设置chart宽高自适应
+            container: 'regShape-chart', // 指定绘制chart的容器
+            autoFit: true, // 设置chart宽高自适应
             height: 335,
             padding: 20
           })

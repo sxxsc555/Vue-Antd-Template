@@ -23,6 +23,7 @@ const webpackConfig = merge(baseWebpackConfig, {
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
+    publicPath: './',
     path: config.build.assetsRoot,
     filename: utils.assetsPath('js/[name].[chunkhash].js'),
     chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
@@ -64,6 +65,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       filename: config.build.index,
       template: 'index.html',
       inject: true,
+      favicon: path.resolve('./public/favicon.ico'),
       minify: {
         removeComments: true,
         collapseWhitespace: true,

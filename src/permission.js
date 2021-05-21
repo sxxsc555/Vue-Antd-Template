@@ -17,8 +17,8 @@ router.beforeEach(async(to, from, next) => {
   const path = to.path
 
   // 判断登录令牌，如果没有跳转登录
-  if(hasToken) {
-    if(path === '/login') {
+  if (hasToken) {
+    if (path === '/login') {
       next({ path: '/' })
       NProgress.done()
     } else {

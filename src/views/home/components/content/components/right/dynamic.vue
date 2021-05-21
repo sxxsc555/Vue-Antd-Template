@@ -1,24 +1,24 @@
 <template>
   <section class="dynamic-container">
-    <a-card size="small" :title="title" style="padding: 0px 10px;">
+    <a-card :title="title" size="small" style="padding: 0px 10px;">
       <a-progress
-        type="circle"
-        title="666"
         :stroke-color="strokeColor"
         :percent="percent1"
+        type="circle"
+        title="666"
         style="float: left;margin-left: 20px;"
       />
       <a-progress
-        type="circle"
         :stroke-color="strokeColor"
         :percent="percent2"
+        type="circle"
         style="float: right;margin-right: 20px;"
       />
       <a-progress
         :stroke-color="strokeColor"
         :percent="percent2"
-        style="margin-top: 20px;"
         :status="status"
+        style="margin-top: 20px;"
       />
     </a-card>
   </section>
@@ -34,7 +34,7 @@ export default {
         '100%': '#87d068'
       },
       percent1: 88,
-			percent2: 66,
+      percent2: 66,
       status: 'active'
     }
   }

@@ -1,7 +1,7 @@
 <template>
   <div class="app-wrapper">
     <Sidebar />
-    <div class="content-container" :class="{ 'toggleMargin': toggleMargin }">
+    <div :class="{ 'toggleMargin': toggleMargin }" class="content-container">
       <Navbar />
       <Main />
     </div>

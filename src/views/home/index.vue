@@ -1,7 +1,7 @@
 <template>
   <section class="home-container">
-    <Header></Header>
-    <Content></Content>
+    <Header/>
+    <Content/>
   </section>
 </template>
 

@@ -11,7 +11,7 @@ const mutations = {
   },
   SET_TOKEN: (state, token) => {
     state.token = token
-  },
+  }
 
 }
 
@@ -20,7 +20,7 @@ const actions = {
   login({ commit }, userinfo) {
     const { username, password } = userinfo
     return new Promise((resolve, reject) => {
-      if(username === 'admin' && password === '123456') {
+      if (username === 'admin' && password === '123456') {
         commit('SET_TOKEN', username)
         setToken(username)
         resolve()
@@ -33,7 +33,7 @@ const actions = {
   // 注销
   logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      if(state.token) {
+      if (state.token) {
         removeToken()
         resetRouter()
         commit('RESET_STATE')

@@ -6,13 +6,13 @@
       </a>
 
       <a-card-grid
-        class="grid-item"
         v-for="(item, index) in gridData"
         v-show="!hidden"
-       :key="index"
+        :key="index"
+        class="grid-item"
       >
         <a-card-meta :title="item.title" :description="item.description">
-          <a-avatar slot="avatar" size="large" :src="item.src"></a-avatar>
+          <a-avatar slot="avatar" :src="item.src" size="large"/>
         </a-card-meta>
 
         <div class="grid-footer">
