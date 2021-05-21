@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 html {
   height: 100%;
   box-sizing: border-box;
@@ -14,15 +19,4 @@ body {
 
 #app {
   height: 100%;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  margin: 0;
-  padding: 0;
-  display: inline;
-}
-
-.ant-menu-item {
-  height: 45px;
-  line-height: 45px;
 }
