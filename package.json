@@ -1,10 +1,11 @@
 {
   "name": "vue-antd-template",
   "version": "1.0.0",
+  "author": "chq",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "serve": "vite preview"
+    "build:prod": "vite build --mode production",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@antv/g2": "^4.1.16",

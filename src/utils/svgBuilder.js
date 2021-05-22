@@ -20,8 +20,6 @@ function findSvgFile(dir) {
         .toString()
         .replace(clearReturn, '')
         .replace(svgTitle, ($1, $2) => {
-          // console.log(++i)
-          // console.log(dirent.name)
           let width = 0
           let height = 0
           let content = $2.replace(
@@ -35,9 +33,11 @@ function findSvgFile(dir) {
               return ''
             }
           )
+
           if (!hasViewBox.test($2)) {
             content += `viewBox="0 0 ${width} ${height}"`
           }
+
           return `<symbol id="${idPerfix}-${dirent.name.replace(
             '.svg',
             ''
@@ -54,8 +54,7 @@ export const svgBuilder = (path, perfix = 'icon') => {
   if (path === '') return
   idPerfix = perfix
   const res = findSvgFile(path)
-  // console.log(res.length)
-  // const res = []
+  
   return {
     name: 'svg-transform',
     transformIndexHtml(html) {
