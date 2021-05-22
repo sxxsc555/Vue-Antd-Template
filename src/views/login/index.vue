@@ -1,129 +1,133 @@
 <template>
-  <section class="login-container">
+  <div class="login-container">
     <a-form
-      :form="form"
+      ref="formRef"
       class="login-form"
-      @submit.prevent="handleSubmit"
+      layout="vertical"
+      :model="formState"
+      :rules="rules"
     >
       <a-form-item>
-        <img src="../../assets/logo.svg" style="width: 50px;" />
-        <h1 style="color: rgb(245, 245, 245);">Vue Antd Template</h1>
-        <span style="float: right;line-height: 50px;">欢迎!</span>
+        <img src="@/assets/icons/svg/logo.svg" style="width: 50px;" />
+        <h1 class="login-title">Vue Antd Template</h1>
+        <span class="login-subTitle">欢迎!</span>
       </a-form-item>
-      <a-form-item>
-        <a-input
-          v-decorator="[
-            'username',
-            {
-              initialValue: 'admin',
-              rules: [{ required: true, message: 'Please input your username!' }]
-            }
-          ]"
-          placeholder="用户名"
-        >
-          <a-icon slot="prefix" type="user" style="color: rgba(0,0,0,.25)" />
-        </a-input>
+
+      <a-form-item ref="username" label="用户名：" name="username">
+        <a-input v-model:value="formState.username" />
       </a-form-item>
-      <a-form-item>
-        <a-input
-          v-decorator="[
-            'password',
-            {
-              initialValue: '123456',
-              rules: [{ required: true, message: 'Please input your Password!' }]
-            }
-          ]"
-          type="password"
-          placeholder="密码"
-        >
-          <a-icon slot="prefix" type="lock" style="color: rgba(0,0,0,.25)" />
-        </a-input>
+
+      <a-form-item ref="password" label="密码：" name="password">
+        <a-input v-model:value="formState.password" />
       </a-form-item>
+
+      <a-form-item name="checkbox">
+        <a-checkbox v-model:checked="formState.checkbox">记住密码</a-checkbox>
+      </a-form-item>
+
       <a-form-item>
-        <a-checkbox
-          v-decorator="[
-            'remember',
-            {
-              valuePropName: 'checked',
-              initialValue: true,
-            },
-          ]"
-        >
-          记住密码
-        </a-checkbox>
-        <a-button type="link" class="login-form-forgot">
-          忘记密码
-        </a-button>
-        <a-button type="primary" html-type="submit" class="login-form-button" :loading="loading">
-          登录
-        </a-button>
+        <a-button type="primary" class="login-form-button" @click="onSubmit">登录</a-button>
       </a-form-item>
     </a-form>
-  </section>
+  </div>
 </template>
 
 <script>
-export default {
-  data() {
-    return {
-      loading: false,
-      username: 'admin',
-      password: '123456'
-    }
-  },
-  beforeCreate() {
-    this.form = this.$form.createForm(this, { name: 'normal_login' });
-  },
-  methods: {
-    handleSubmit(e) {
-      this.form.validateFields((err, values) => {
-        if(values) {
-          this.loading = true
-          this.$store.dispatch('user/login', values)
-            .then(() => {
-              setTimeout(() => {
-                this.loading = false
-                this.$router.push({ path: '/' })
-                this.$message.success('欢迎回来!')
-              }, 1000)
-            })
-            .catch(() => {
-              this.loading = false
-              this.$message.error('账号或密码错误！')
-            })
-        } else {
-          console.log('error submit...')
+import { defineComponent, reactive, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+
+export default defineComponent({
+  setup() {
+    const router = useRouter()
+    const store = useStore()
+    const formRef = ref()
+    const formState = reactive({
+      username: '',
+      password: '',
+      checkbox: false
+    })
+    const rules = {
+      username: [
+        {
+          required: true,
+          message: '请输入用户名',
+          trigger: 'blur'
         }
-      })
+      ],
+      password: [
+        {
+          required: true,
+          message: '请输入密码',
+          trigger: 'blur'
+        }
+      ]
+    }
+
+    /* 登录 */
+    const onSubmit = () => {
+      formRef.value
+        .validate()
+        .then((res) => {
+          store.dispatch('user/login', res)
+          router.push({ path: '/' })
+        })
+        .catch(error => {
+          console.log('error', error)
+        })
+    }
+
+    return {
+      formRef,
+      formState,
+      rules,
+      onSubmit
     }
   }
-}
+})
 </script>
+
 <style lang="scss" scoped>
 .login-container {
+  width: 100%;
   min-height: 100%;
-  padding: 20px;
+  padding: 2rem;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../../assets/images/background.jpg);
+  background-image: url(../../assets/images/login_background.jpg);
   background-size: cover;
+  background-position: center;
+
   .login-form {
-    width: 380px;
-    min-width: 200px;
-    padding: 20px 40px;
+    width: 38rem;
+    min-width: 20rem;
+    padding: 2rem 4rem;
     border: 1px solid rgba(240, 240, 240, 0.3);
     border-radius: 8px;
     box-shadow: 0px 0px 5px #f0f1f2;
-    background: rgba(255, 255, 255, 0.1);
-    .login-form-forgot {
-      float: right;
-      line-height: 40px;
-      padding-right: 0;
-    }
-    .login-form-button {
-      width: 100%;
-    }
+    background: rgba(245, 245, 245, 0.4);
   }
+
+  .login-title {
+    color: rgb(88, 88, 88)
+  }
+
+  .login-subTitle {
+    float: right;
+  }
+
+  .login-form-button {
+    width: 100%;
+    margin-top: 2rem;
+  }
+}
+
+.ant-form-item {
+  margin-bottom: 0;
+}
+
+.ant-input {
+  background-color: rgba(#ffffff, .6);
 }
 </style>

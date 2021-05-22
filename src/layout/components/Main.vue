@@ -1,24 +1,30 @@
 <template>
-  <section class="Main-container">
+  <div class="Main-container">
     <router-view :key="key" />
-  </section>
+  </div>
 </template>
 
 <script>
-export default {
+import { defineComponent, computed } from 'vue'
+import { useRoute } from 'vue-router'
+
+export default defineComponent({
   name: 'Main',
-  computed: {
-    key() {
-      return this.$route.path
+  setup() {
+    const route = useRoute()
+    const key = computed(() => route.path)
+
+    return {
+      key
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>
-  .Main-container {
-    height: 100%;
-    background: #f0f2f5;
-    padding: 20px;
-  }
+.Main-container {
+  height: 100%;
+  background: #f0f2f5;
+  padding: 20px;
+}
 </style>
