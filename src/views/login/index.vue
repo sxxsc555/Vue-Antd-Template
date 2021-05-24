@@ -10,7 +10,7 @@
       <a-form-item>
         <img src="@/assets/icons/svg/logo.svg" style="width: 50px;" />
         <h1 class="login-title">Vue Antd Template</h1>
-        <span class="login-subTitle">欢迎!</span>
+        <span class="login-subTitle">欢迎！</span>
       </a-form-item>
 
       <a-form-item ref="username" label="用户名：" name="username">
@@ -39,43 +39,7 @@ import { useStore } from 'vuex'
 
 export default defineComponent({
   setup() {
-    const router = useRouter()
-    const store = useStore()
-    const formRef = ref()
-    const formState = reactive({
-      username: '',
-      password: '',
-      checkbox: false
-    })
-    const rules = {
-      username: [
-        {
-          required: true,
-          message: '请输入用户名',
-          trigger: 'blur'
-        }
-      ],
-      password: [
-        {
-          required: true,
-          message: '请输入密码',
-          trigger: 'blur'
-        }
-      ]
-    }
-
-    /* 登录 */
-    const onSubmit = () => {
-      formRef.value
-        .validate()
-        .then((res) => {
-          store.dispatch('user/login', res)
-          router.push({ path: '/' })
-        })
-        .catch(error => {
-          console.log('error', error)
-        })
-    }
+    const { formRef, formState, rules, onSubmit } = onForm()
 
     return {
       formRef,
@@ -85,6 +49,54 @@ export default defineComponent({
     }
   }
 })
+
+function onForm() {
+  const router = useRouter()
+  const store = useStore()
+
+  const formRef = ref()
+  const formState = reactive({
+    username: '',
+    password: '',
+    checkbox: false
+  })
+  const rules = {
+    username: [
+      {
+        required: true,
+        message: '请输入用户名',
+        trigger: 'blur'
+      }
+    ],
+    password: [
+      {
+        required: true,
+        message: '请输入密码',
+        trigger: 'blur'
+      }
+    ]
+  }
+
+  /* 登录 */
+  function onSubmit() {
+    formRef.value
+      .validate()
+      .then((res) => {
+        store.dispatch('user/login', res)
+        router.push({ path: '/' })
+      })
+      .catch(error => {
+        console.log('error', error)
+      })
+  }
+
+  return {
+    formRef,
+    formState,
+    rules,
+    onSubmit
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -115,6 +127,7 @@ export default defineComponent({
 
   .login-subTitle {
     float: right;
+    color: #1890FF;
   }
 
   .login-form-button {

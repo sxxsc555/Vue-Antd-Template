@@ -21,49 +21,64 @@ export default defineComponent({
     Main
   },
   setup() {
-    let store = useStore()
-    let toggleSidebar = ref(store.getters.sidebar.opened)
+    // 监控窗口大小变化
+    watchWindow()
 
-    // 监听sidebar变化并赋值toggleSidebar
-    watch(store.getters.sidebar, (newVal) => {
-      toggleSidebar.value = newVal.opened
-    })
-
-    onBeforeMount(() => {
-      // 监听窗口大小变化
-      window.addEventListener('resize', () => resizeHandler())
-    })
-
-    onMounted(() => {
-      resizeHandler()
-    })
-
-    onBeforeUnmount(() => {
-      // 删除窗口监听器
-      window.removeEventListener('resize', () => resizeHandler())
-    })
-
-    // 判断窗口达到小窗宽度
-    const isMobile = () => {
-      const { body } = document
-      const Width = 992
-      const rect = body.getBoundingClientRect()
-      return rect.width - 1 < Width
-    }
-
-    // store保存当前窗口类型
-    const resizeHandler = () => {
-      if (!document.hidden) {
-        const IsMobile = isMobile()
-        store.dispatch('app/toggleDevice', IsMobile ? 'mobile' : 'desktop')
-      }
-    }
+    const { toggleSidebar } = onToggleSidebar()
 
     return {
       toggleSidebar
     }
   }
 })
+
+function onToggleSidebar() {
+  const store = useStore()
+  let toggleSidebar = ref(store.getters.sidebar.opened)
+
+  // 监听sidebar变化并赋值toggleSidebar
+  watch(() => store.getters.sidebar.opened, (newVal) => {
+    toggleSidebar.value = newVal
+  })
+
+  return {
+    toggleSidebar
+  }
+}
+
+function watchWindow() {
+  const store = useStore()
+
+  onBeforeMount(() => {
+    // 监听窗口大小变化
+    window.addEventListener('resize', () => resizeHandler())
+  })
+
+  onMounted(() => {
+    resizeHandler()
+  })
+
+  onBeforeUnmount(() => {
+    // 删除窗口监听器
+    window.removeEventListener('resize', () => resizeHandler())
+  })
+
+  // 判断窗口达到小窗宽度
+  function isMobile() {
+    const { body } = document
+    const Width = 992
+    const rect = body.getBoundingClientRect()
+    return rect.width - 1 < Width
+  }
+
+  // store保存当前窗口类型
+  function resizeHandler() {
+    if (!document.hidden) {
+      const IsMobile = isMobile()
+      store.dispatch('app/toggleDevice', IsMobile ? 'mobile' : 'desktop')
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>

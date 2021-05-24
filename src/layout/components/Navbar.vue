@@ -11,7 +11,7 @@
        type="link"
         block
         :loading="btnLoading"
-        @click="btnClick"
+        @click="loginOffMethod"
       >
         退出
       </a-button>
@@ -31,44 +31,66 @@ export default defineComponent({
     Hamburger
   },
   setup() {
-    const store = useStore()
-    const router = useRouter()
-    let btnLoading = ref(false)
-    let isActive = ref(false)
+    const { isActive, toggleClick, toggleWatch } = toggle()
+    toggleWatch()
+    
+    const { btnLoading, loginOffMethod } = loginOff()
 
-    /* 注销 */
-    const btnClick = async () => {
-      btnLoading.value = true
-      await store.dispatch('user/logout')
-      setTimeout(() => {
-        btnLoading.value = false
-        router.push({ path: '/login' })
-      }, 1000)
+    return {
+      isActive,
+      toggleClick,
+      btnLoading,
+      loginOffMethod
     }
+  }
+})
 
+function toggle() {
+  const store = useStore()
+  let isActive = ref(false)
+
+  async function toggleClick() {
     /* 切换菜单状态 */
-    const toggleClick = async() => {
-      await store.dispatch('app/toggleSidebar')
-      isActive.value = !isActive.value
-    }
+    await store.dispatch('app/toggleSidebar')
+    isActive.value = !isActive.value
+  }
 
+  function toggleWatch() {
     // 监听device并切换菜单状态
-    watch(store.getters.device, async(newVal) => {
-      if(newVal.value === 'mobile' && !store.getters.sidebar.opened) {
+    watch(() => store.getters.device, async(newVal) => {
+      if(newVal === 'mobile' && !store.getters.sidebar.opened) {
         await store.dispatch('app/toggleSidebar')
         isActive.value = true
       }
     })
-
-
-    return {
-      btnLoading,
-      btnClick,
-      toggleClick,
-      isActive
-    }
   }
-})
+
+  return {
+    isActive,
+    toggleClick,
+    toggleWatch
+  }
+}
+
+function loginOff() {
+  const router = useRouter()
+  let btnLoading = ref(false)
+
+  /* 注销 */
+  async function loginOffMethod() {
+    btnLoading.value = true
+    await store.dispatch('user/logout')
+    setTimeout(() => {
+      btnLoading.value = false
+      router.push({ path: '/login' })
+    }, 1000)
+  }
+
+  return {
+    btnLoading,
+    loginOffMethod
+  }
+}
 </script>
 
 <style lang="scss" scoped>

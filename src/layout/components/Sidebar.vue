@@ -56,9 +56,9 @@ export default defineComponent({
     let store = useStore()
     const state = reactive({
       collapsed: false,
-      selectedKeys: [],
-      openKeys: [],
-      rootSubmenuKeys: []
+      selectedKeys: [], // 当前被选中menu
+      openKeys: [], // 当前展开的menu
+      rootSubmenuKeys: [] // 所有可以被展开的menu
     })
 
     /* 获取keys */
@@ -74,20 +74,20 @@ export default defineComponent({
     state.collapsed = opened
 
     // 监听route并赋selectedKeys值
-    watch(route, (newVal) => {
-      const { path } = newVal
-      state.selectedKeys = [path]
+    watch(() => route.path, (newVal) => {
+      state.selectedKeys = [newVal]
     })
 
     // 监听sidebar并赋值
-    watch(store.getters.sidebar, (newVal) => {
-      toggleSidebar.value = newVal.opened
-      titleHidden.value = newVal.opened
-      state.collapsed = newVal.opened
+    watch(() => store.getters.sidebar.opened, (newVal) => {
+      toggleSidebar.value = newVal
+      titleHidden.value = newVal
+      state.collapsed = newVal
 
       // 收起状态清空openKeys
-      if(newVal.opened) {
+      if(newVal) {
         state.openKeys.length = 0
+
       } else {
         //  展开状态重新获取openKeys
         const openPath = [route.matched[route.matched.length - 2].path]
@@ -111,7 +111,7 @@ export default defineComponent({
     }
 
     /* 只展开当前父级菜单 */
-    const onOpenChange = openKeys => {
+    const onOpenChange = (openKeys) => {
       const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
 
       if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {

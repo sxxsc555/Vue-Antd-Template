@@ -11,14 +11,22 @@ import { useRoute } from 'vue-router'
 export default defineComponent({
   name: 'Main',
   setup() {
-    const route = useRoute()
-    const key = computed(() => route.path)
+    const { key } = getKey()
 
     return {
       key
     }
   }
 })
+
+function getKey() {
+  const route = useRoute()
+  const key = computed(() => route.path)
+
+  return {
+    key
+  }
+}
 </script>
 
 <style lang="scss" scoped>

@@ -33,8 +33,8 @@ export default defineComponent({
     })
     const externalStyle = computed(() => {
       return {
-        mask: `url(${this.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
+        mask: `url(${props.iconClass}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`
       }
     })
 

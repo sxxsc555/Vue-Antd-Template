@@ -6,14 +6,20 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from 'vue'
+import { useRouter } from 'vue-router'
+
+export default defineComponent({
   name: '404',
-  methods: {
-    goHome() {
-      this.$router.push({ path: '/' })
+  setup() {
+    const router = useRouter()
+    const goHome = () => router.push({ path: '/' })
+
+    return {
+      goHome
     }
   }
-}
+})
 </script>
 
 <style lang="scss" scoped>

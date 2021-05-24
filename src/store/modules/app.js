@@ -4,9 +4,7 @@ const state = {
   sidebar: {
     opened: getToken('sidebarStatus') ? !!+getToken('sidebarStatus') : false
   },
-  device: {
-    value: 'desktop'
-  }
+  device: 'desktop'
 }
 
 const mutations = {
@@ -19,7 +17,7 @@ const mutations = {
     }
   },
   TOGGLE_DEVICE: (state, device) => {
-    state.device.value = device
+    state.device = device
   }
 }
 
