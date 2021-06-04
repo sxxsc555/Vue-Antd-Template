@@ -74,6 +74,7 @@ function toggle() {
 
 function loginOff() {
   const router = useRouter()
+  const store = useStore()
   let btnLoading = ref(false)
 
   /* 注销 */

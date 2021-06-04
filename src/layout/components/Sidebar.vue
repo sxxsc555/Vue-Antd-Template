@@ -1,16 +1,16 @@
 <template>
-  <div class="Sidebar-container" :class="{ 'toggleSidebar': toggleSidebar }">
-    <div class="logo">
+  <div class="Sidebar-container" :class="{ 'toggleSidebar': collapsed }">
+    <div class="Sidebar-logo" @click="logoClick">
       <img src="@/assets/icons/svg/logo.svg" />
-      <strong :class="{ 'hidden': titleHidden }">Vue Antd admin</strong>
+      <strong :class="{ 'hidden': collapsed }">Vue Antd admin</strong>
     </div>
 
     <a-menu
       mode="inline"
-      class="menu"
+      class="Sidebar-menu"
       :inline-collapsed="collapsed"
       :openKeys="openKeys"
-      :selectedKeys="selectedKeys"
+      :selectedKeys="[route.path]"
       @select="menuItemSelect"
       @openChange="onOpenChange"
     >
@@ -20,7 +20,7 @@
           <template v-if="route.children.length === 1">
             <a-menu-item :key="route.redirect">
               <svg-icon iconClass="logo"></svg-icon>
-              <span class="spanStyle" :class="{ 'hidden': toggleSidebar }">{{ route.children[0].meta.title }}</span>
+              <span class="spanStyle" :class="{ 'hidden': collapsed }">{{ route.children[0].meta.title }}</span>
             </a-menu-item>
           </template>
 
@@ -29,7 +29,7 @@
             <a-sub-menu :key="menuKey(route.path)">
               <template #title>
                 <svg-icon iconClass="logo"></svg-icon>
-                <span class="spanStyle" :class="{ 'hidden': toggleSidebar }">{{ route.meta.title }}</span>
+                <span class="spanStyle" :class="{ 'hidden': collapsed }">{{ route.meta.title }}</span>
               </template>
 
               <a-menu-item v-for="child in route.children" :key="menuItemKey(route.path, child.path)">
@@ -44,7 +44,7 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, ref, toRefs, watch } from 'vue'
+import { computed, defineComponent, reactive, toRefs, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useStore } from 'vuex'
 
@@ -64,24 +64,14 @@ export default defineComponent({
     /* 获取keys */
     const { path } = route
     const openPath = [route.matched[route.matched.length - 2].path]
-    state.selectedKeys = [path]
     state.openKeys = openPath
 
     /* 获取数据项值 */
     const opened = store.getters.sidebar.opened
-    let toggleSidebar = ref(opened)
-    let titleHidden = ref(opened)
     state.collapsed = opened
-
-    // 监听route并赋selectedKeys值
-    watch(() => route.path, (newVal) => {
-      state.selectedKeys = [newVal]
-    })
 
     // 监听sidebar并赋值
     watch(() => store.getters.sidebar.opened, (newVal) => {
-      toggleSidebar.value = newVal
-      titleHidden.value = newVal
       state.collapsed = newVal
 
       // 收起状态清空openKeys
@@ -121,15 +111,19 @@ export default defineComponent({
       }
     }
 
+    const logoClick = () => {
+      router.push({ path: '/' })
+    }
+
     return {
       ...toRefs(state),
+      route,
       routes,
       menuKey,
       menuItemKey,
       menuItemSelect,
       onOpenChange,
-      toggleSidebar,
-      titleHidden
+      logoClick
     }
   }
 })
@@ -146,7 +140,7 @@ export default defineComponent({
     width: 7.9rem;
   }
 
-  .menu {
+  .Sidebar-menu {
     height: 100%;
     position: absolute;
 
@@ -160,10 +154,11 @@ export default defineComponent({
     display: none !important;
   }
 
-  .logo {
+  .Sidebar-logo {
     margin: 7px;
     overflow: hidden;
     text-align: center;
+    cursor: pointer;
     
     img {
       width: 40px;

@@ -93,7 +93,7 @@ function watchWindow() {
     display: flex;
     flex-direction: column;
     margin-left: 18rem;
-    transition: margin-left .25s;
+    transition: margin-left .28s;
 
     &.toggleSidebar {
       margin-left: 8rem;
