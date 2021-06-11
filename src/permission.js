@@ -6,7 +6,7 @@ import '@/styles/nprogress.scss'
 
 NProgress.configure({ showSpinner: false })// 设置圆圈进度条
 
-router.beforeEach(async(to, from, next) => {
+router.beforeEach((to, from, next) => {
   NProgress.start()// 开启进度条
 
   const token = getToken('token')

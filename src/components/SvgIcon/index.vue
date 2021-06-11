@@ -33,8 +33,8 @@ export default defineComponent({
     })
     const externalStyle = computed(() => {
       return {
-        mask: `url(${this.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${this.iconClass}) no-repeat 50% 50%`
+        mask: `url(${props.iconClass}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`
       }
     })
 
@@ -50,9 +50,9 @@ export default defineComponent({
 
 <style lang="scss">
 .svg-icon {
-  width: 1em;
-  height: 1em;
-  vertical-align: -0.15em;
+  width: 2rem;
+  height: 2rem;
+  vertical-align: -0.5rem;
   fill: currentColor;
   overflow: hidden;
 }

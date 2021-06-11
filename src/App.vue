@@ -8,4 +8,5 @@
 
 <style lang="scss">
 @import '@/styles/index.scss';
+@import '@/styles/antd-ui.scss';
 </style>
