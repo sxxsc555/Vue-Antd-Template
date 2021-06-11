@@ -33,42 +33,72 @@ export default defineComponent({
     SidebarItem
   },
   setup() {
-    const router = useRouter()
     const route = useRoute()
+    const router = useRouter()
     const routes = computed(() => router.options.routes)
-    const store = useStore()
-    const state = reactive({
-      collapsed: false,
-      openKeys: [], // 当前展开的menu
-      rootSubmenuKeys: [] // 所有可以被展开的menu
-    })
+
+    const { 
+      state, 
+      getSubMenuKeys, 
+      getOpenKeys, 
+      getOpened, 
+      watchSidebar, 
+      onOpenChange, 
+      menuItemClick
+    } = menu()
     
-    const getSubMenuKeys = () => {
-      router.options.routes.forEach((item) => {
-        if(!item.hidden && item.children.length > 1) {
-          state.rootSubmenuKeys.push(item.path)
-        }
-      })
-    }
     getSubMenuKeys()
-
-    /* 获取openKeys */
-    const getOpenKeys = () => {
-      if(!store.getters.sidebar.opened) {
-        const matched = JSON.parse(JSON.stringify(route.matched))
-        matched.pop()
-        state.openKeys = matched.map((item) => item.path)
-      }
-    }
     getOpenKeys()
-
-    /* 获取数据项值 */
-    const getOpened = () => {
-      state.collapsed = store.getters.sidebar.opened
-    }
     getOpened()
+    watchSidebar()
+    provideCollapsed(state)
 
-    // 监听sidebar并赋值
+    return {
+      ...toRefs(state),
+      route,
+      routes,
+      onOpenChange,
+      menuItemClick
+    }
+  }
+})
+
+/* 菜单方法集 */
+function menu() {
+  const router = useRouter()
+  const route = useRoute()
+  const store = useStore()
+  const state = reactive({
+    collapsed: false,
+    openKeys: [], // 当前展开的menu
+    rootSubmenuKeys: [] // 所有可以被展开的menu
+  })
+  
+  // 获取所有subMenuKey的数组
+  function getSubMenuKeys() {
+    router.options.routes.forEach((item) => {
+      if(!item.hidden && item.children.length > 1) {
+        state.rootSubmenuKeys.push(item.path)
+      }
+    })
+  }
+
+  // 获取openKeys
+  function getOpenKeys() {
+    if(!store.getters.sidebar.opened) {
+      const matched = JSON.parse(JSON.stringify(route.matched))
+      matched.pop()
+      state.openKeys = matched.map((item) => item.path)
+    }
+  }
+
+  // 获取缩起/展开状态
+  function getOpened() {
+    state.collapsed = store.getters.sidebar.opened
+  }
+
+  // 监听sidebar并赋值
+  function watchSidebar() {
     watch(() => store.getters.sidebar.opened, (newVal) => {
       state.collapsed = newVal
 
@@ -80,40 +110,43 @@ export default defineComponent({
         getOpenKeys()
       }
     })
+  }
 
-    /* 只展开当前父级菜单 */
-    const onOpenChange = (openKeys) => {
-      console.log(state.rootSubmenuKeys)
-      const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
+  // 仅展开当前父级菜单
+  function onOpenChange(openKeys) {
+    const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
 
-      if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-        state.openKeys = openKeys
-      } else {
-        state.openKeys = latestOpenKey ? [latestOpenKey] : []
-      }
-    }
-
-    /* 获取当前点击menuItem并跳转对应路由 */
-    const menuItemClick = ({ key }) => {
-      // console.log(key)
-      if(isExternal(key)) {
-        window.open(key)
-      } else {
-        router.push({ path: key })
-      }
-    }
-
-    provide('collapsed', computed(() => state.collapsed))
-
-    return {
-      ...toRefs(state),
-      route,
-      routes,
-      onOpenChange,
-      menuItemClick
+    if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+      state.openKeys = openKeys
+    } else {
+      state.openKeys = latestOpenKey ? [latestOpenKey] : []
     }
   }
-})
+
+  // 获取当前点击menuItem并跳转对应路由
+  function menuItemClick({ key }) {
+    if(isExternal(key)) {
+      window.open(key)
+    } else {
+      router.push({ path: key })
+    }
+  }
+
+  return {
+    state,
+    getSubMenuKeys,
+    getOpenKeys,
+    getOpened,
+    watchSidebar,
+    onOpenChange,
+    menuItemClick
+  }
+}
+
+/* 推送collapsed值 */
+function provideCollapsed(state) {
+  provide('collapsed', computed(() => state.collapsed))
+}
 </script>
 
 <style lang="scss" scoped>

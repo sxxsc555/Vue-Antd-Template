@@ -17,15 +17,7 @@
           </template>
 
           <template v-for="child in item.children" :key="child.path">
-            <template v-if="!child.children">
-              <a-menu-item :key="resolvePath(child.path)">
-                <item :icon="child.meta.icon" :title="child.meta.title" :path="resolvePath(child.path)" />
-              </a-menu-item>
-            </template>
-
-            <template v-else>
-              <SidebarItem :item="child" :path="resolvePath(child.path)" />
-            </template>
+            <SidebarItem :item="child" :path="resolvePath(child.path)" />
           </template>
         </a-sub-menu>
       </template>
@@ -53,50 +45,7 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const data = reactive({
-      title: 'Vue Antd admin',
-      imgUrl: 'src/assets/icons/svg/logo.svg',
-      onlyOneChild: [],
-      subMenus: []
-    })
-
-    const resolvePath = (routePath) => {
-      let path = ''
-
-      if(props.path.includes(routePath)) {
-        path = props.path
-      } else {
-        if((routePath.indexOf('/') !== -1) || (props.path === '/')) {
-          path = props.path + routePath
-        } else {
-          path = props.path + '/' + routePath
-        }
-      }
-      
-      return path
-    }
-
-    const hasOneShowingChild = (children = [], parent) => {
-      const showChildren = children.filter((item) => {
-        if(item.hidden) {
-          return false
-        } else {
-          data.onlyOneChild = item
-          return true
-        }
-      })
-
-      if(showChildren.length === 1) {
-        return true
-      }
-
-      if(showChildren.length === 0) {
-        data.onlyOneChild = {...parent, path: ''}
-        return true
-      }
-
-      return false
-    }
+    const { data, resolvePath, hasOneShowingChild } = getMenuKeys(props)
 
     return {
       ...toRefs(data),
@@ -105,4 +54,56 @@ export default defineComponent({
     }
   }
 })
+
+/* 获取menuKeys集合 */
+function getMenuKeys(props) {
+  const data = reactive({
+    onlyOneChild: [],
+    subMenus: []
+  })
+
+  function resolvePath(routePath) {
+    let path = ''
+
+    if(props.path.includes(routePath)) {
+      path = props.path
+    } else {
+      if((routePath.indexOf('/') !== -1) || (props.path === '/')) {
+        path = props.path + routePath
+      } else {
+        path = props.path + '/' + routePath
+      }
+    }
+    
+    return path
+  }
+
+  function hasOneShowingChild(children = [], parent) {
+    const showChildren = children.filter((item) => {
+      if(item.hidden) {
+        return false
+      } else {
+        data.onlyOneChild = item
+        return true
+      }
+    })
+
+    if(showChildren.length === 1) {
+      return true
+    }
+
+    if(showChildren.length === 0) {
+      data.onlyOneChild = {...parent, path: ''}
+      return true
+    }
+
+    return false
+  }
+
+  return {
+    data,
+    resolvePath,
+    hasOneShowingChild
+  }
+}
 </script>

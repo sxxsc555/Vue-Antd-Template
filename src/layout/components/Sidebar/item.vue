@@ -26,11 +26,8 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const collapsed = inject('collapsed')
-    const router = useRouter()
-    const routes = computed(() => router.options.routes)
-    const onlyOnePaths = routes.value.map((item) => item.path)
-    const isOnlyOnePath = onlyOnePaths.filter((item) => item === props.path).length > 0
+    const collapsed = getCollapsed()
+    const isOnlyOnePath = getIsOnlyOnePath(props)
 
     return {
       collapsed,
@@ -38,6 +35,22 @@ export default defineComponent({
     }
   }
 })
+
+/* 注入父组件推送的collapsed */
+function getCollapsed() {
+  const collapsed = inject('collapsed')
+  return collapsed
+}
+
+/* 获取最外层菜单的path */
+function getIsOnlyOnePath(props) {
+  const router = useRouter()
+  const routes = computed(() => router.options.routes)
+  const onlyOnePaths = routes.value.map((item) => item.path)
+  const isOnlyOnePath = onlyOnePaths.filter((item) => item === props.path).length > 0
+
+  return isOnlyOnePath
+}
 </script>
 
 <style lang="scss" scoped>
