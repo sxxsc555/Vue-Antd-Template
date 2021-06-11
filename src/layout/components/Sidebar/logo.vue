@@ -9,6 +9,7 @@
 
 <script>
 import { defineComponent, reactive, toRefs } from 'vue'
+import logo from '@/assets/icons/svg/logo.svg'
 
 export default defineComponent({
   name: 'SidebarLogo',
@@ -21,7 +22,7 @@ export default defineComponent({
   setup() {
     const data = reactive({
       title: 'Vue Antd admin',
-      imgUrl: 'src/assets/icons/svg/logo.svg'
+      imgUrl: logo
     })
 
     return {

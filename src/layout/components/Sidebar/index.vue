@@ -86,7 +86,7 @@ function menu() {
   // 获取openKeys
   function getOpenKeys() {
     if(!store.getters.sidebar.opened) {
-      const matched = JSON.parse(JSON.stringify(route.matched))
+      const matched = Object.create(route.matched)
       matched.pop()
       state.openKeys = matched.map((item) => item.path)
     }
