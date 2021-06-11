@@ -96,7 +96,7 @@ function onForm() {
     rules,
     onSubmit
   }
-})
+}
 </script>
 
 <style lang="scss" scoped>
