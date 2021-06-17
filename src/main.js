@@ -2,7 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import store from './store'
 import router from './router'
-import { Button, Form, Checkbox, Input, Select, Menu } from 'ant-design-vue';
+import { Button, Form, Checkbox, Input, Select, Menu } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import './permission'
 import svgIcon from './components/SvgIcon/index.vue'
