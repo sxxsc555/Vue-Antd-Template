@@ -11,7 +11,7 @@ function findSvgFile(dir) {
   const dirents = readdirSync(dir, {
     withFileTypes: true
   })
-  
+
   for (const dirent of dirents) {
     if (dirent.isDirectory()) {
       svgRes.push(...findSvgFile(dir + dirent.name + '/'))
@@ -54,7 +54,7 @@ export const svgBuilder = (path, perfix = 'icon') => {
   if (path === '') return
   idPerfix = perfix
   const res = findSvgFile(path)
-  
+
   return {
     name: 'svg-transform',
     transformIndexHtml(html) {

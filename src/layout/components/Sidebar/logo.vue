@@ -1,7 +1,7 @@
 <template>
   <div class="Sidebar-logo-container">
     <router-link to="/">
-      <img :src="imgUrl" />
+      <img :src="imgUrl">
       <strong :class="{ 'hidden': collapsed }">{{ title }}</strong>
     </router-link>
   </div>
@@ -38,7 +38,7 @@ export default defineComponent({
   overflow: hidden;
   text-align: center;
   cursor: pointer;
-  
+
   img {
     width: 40px;
   }

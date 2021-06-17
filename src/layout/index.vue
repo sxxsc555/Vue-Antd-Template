@@ -14,7 +14,7 @@ import { useStore } from 'vuex'
 import { Navbar, Sidebar, Main } from './components'
 
 export default defineComponent({
-  name: 'layout',
+  name: 'Layout',
   components: {
     Navbar,
     Sidebar,
@@ -34,7 +34,7 @@ export default defineComponent({
 
 function onToggleSidebar() {
   const store = useStore()
-  let toggleSidebar = ref(store.getters.sidebar.opened)
+  const toggleSidebar = ref(store.getters.sidebar.opened)
 
   // 监听sidebar变化并赋值toggleSidebar
   watch(() => store.getters.sidebar.opened, (newVal) => {

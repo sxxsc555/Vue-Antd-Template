@@ -1,6 +1,6 @@
 <template>
   <div class="svgIcon-container">
-    <svg-icon :iconClass="icon" :class="{'bigSvg': collapsed && isOnlyOnePath}"></svg-icon>
+    <svg-icon :icon-class="icon" :class="{'bigSvg': collapsed && isOnlyOnePath}" />
     <span class="spanStyle" :class="{'hidden': collapsed && isOnlyOnePath}">{{ title }}</span>
   </div>
 </template>
@@ -10,7 +10,7 @@ import { computed, defineComponent, inject } from 'vue'
 import { useRouter } from 'vue-router'
 
 export default defineComponent({
-  name: 'item',
+  name: 'Item',
   props: {
     icon: {
       type: String,

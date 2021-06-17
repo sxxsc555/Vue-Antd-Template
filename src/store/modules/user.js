@@ -17,7 +17,7 @@ const mutations = {
 const actions = {
   /* 登录 */
   login({ commit }, userInfo) {
-    const { username, password } = userInfo
+    const { username } = userInfo
 
     return new Promise((resolve, reject) => {
       commit('SET_TOKEN', username)
@@ -27,9 +27,9 @@ const actions = {
   },
 
   /* 注销 */
-  logout({commit, state}) {
+  logout({ commit, state }) {
     return new Promise((resolve, reject) => {
-      if(state.token) {
+      if (state.token) {
         removeToken('token')
         resetRouter()
         commit('RESET_STATE')

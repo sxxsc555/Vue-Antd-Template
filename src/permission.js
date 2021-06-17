@@ -12,19 +12,16 @@ router.beforeEach((to, from, next) => {
   const token = getToken('token')
   const path = to.path
 
-  if(token) {
-    if(path === '/login') {
+  if (token) {
+    if (path === '/login') {
       next({ path: '/' })
       NProgress.done()
-
     } else {
       next()
     }
-
   } else {
-    if(path === '/login') {
+    if (path === '/login') {
       next()
-
     } else {
       next({ path: '/login' })
       NProgress.done()

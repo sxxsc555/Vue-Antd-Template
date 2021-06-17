@@ -16,9 +16,12 @@
             <item :icon="item.meta.icon" :title="item.meta.title" :path="resolvePath(item.path)" />
           </template>
 
-          <template v-for="child in item.children" :key="child.path">
-            <SidebarItem :item="child" :path="resolvePath(child.path)" />
-          </template>
+          <SidebarItem
+            v-for="child in item.children"
+            :key="child.path"
+            :item="child"
+            :path="resolvePath(child.path)"
+          />
         </a-sub-menu>
       </template>
     </a-menu-item-group>
@@ -37,7 +40,10 @@ export default defineComponent({
   props: {
     item: {
       type: Object,
-      require: true
+      require: true,
+      default: () => {
+        return {}
+      }
     },
     path: {
       type: String,
@@ -65,22 +71,22 @@ function getMenuKeys(props) {
   function resolvePath(routePath) {
     let path = ''
 
-    if(props.path.includes(routePath)) {
+    if (props.path.includes(routePath)) {
       path = props.path
     } else {
-      if((routePath.indexOf('/') !== -1) || (props.path === '/')) {
+      if ((routePath.indexOf('/') !== -1) || (props.path === '/')) {
         path = props.path + routePath
       } else {
         path = props.path + '/' + routePath
       }
     }
-    
+
     return path
   }
 
   function hasOneShowingChild(children = [], parent) {
     const showChildren = children.filter((item) => {
-      if(item.hidden) {
+      if (item.hidden) {
         return false
       } else {
         data.onlyOneChild = item
@@ -88,12 +94,12 @@ function getMenuKeys(props) {
       }
     })
 
-    if(showChildren.length === 1) {
+    if (showChildren.length === 1) {
       return true
     }
 
-    if(showChildren.length === 0) {
-      data.onlyOneChild = {...parent, path: ''}
+    if (showChildren.length === 0) {
+      data.onlyOneChild = { ...parent, path: '' }
       return true
     }
 

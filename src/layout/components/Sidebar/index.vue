@@ -6,14 +6,17 @@
       mode="inline"
       class="Sidebar-menu"
       :inline-collapsed="collapsed"
-      :selectedKeys="[route.path]"
-      :openKeys="openKeys"
+      :selected-keys="[route.path]"
+      :open-keys="openKeys"
       @click="menuItemClick"
       @openChange="onOpenChange"
     >
-      <template v-for="route in routes" :key="route.path">
-        <SidebarItem :item="route" :path="route.path" />
-      </template>
+      <SidebarItem
+        v-for="route in routes"
+        :key="route.path"
+        :item="route"
+        :path="route.path"
+      />
     </a-menu>
   </div>
 </template>
@@ -37,16 +40,16 @@ export default defineComponent({
     const router = useRouter()
     const routes = computed(() => router.options.routes)
 
-    const { 
-      state, 
-      getSubMenuKeys, 
-      getOpenKeys, 
-      getOpened, 
-      watchSidebar, 
-      onOpenChange, 
+    const {
+      state,
+      getSubMenuKeys,
+      getOpenKeys,
+      getOpened,
+      watchSidebar,
+      onOpenChange,
       menuItemClick
     } = menu()
-    
+
     getSubMenuKeys()
     getOpenKeys()
     getOpened()
@@ -73,11 +76,11 @@ function menu() {
     openKeys: [], // 当前展开的menu
     rootSubmenuKeys: [] // 所有可以被展开的menu
   })
-  
+
   // 获取所有subMenuKey的数组
   function getSubMenuKeys() {
     router.options.routes.forEach((item) => {
-      if(!item.hidden && item.children.length > 1) {
+      if (!item.hidden && item.children.length > 1) {
         state.rootSubmenuKeys.push(item.path)
       }
     })
@@ -85,7 +88,7 @@ function menu() {
 
   // 获取openKeys
   function getOpenKeys() {
-    if(!store.getters.sidebar.opened) {
+    if (!store.getters.sidebar.opened) {
       const matched = Object.create(route.matched)
       matched.pop()
       state.openKeys = matched.map((item) => item.path)
@@ -103,7 +106,7 @@ function menu() {
       state.collapsed = newVal
 
       // 收起状态清空openKeys
-      if(newVal) {
+      if (newVal) {
         state.openKeys.length = 0
       } else {
         //  展开状态重新获取openKeys
@@ -125,7 +128,7 @@ function menu() {
 
   // 获取当前点击menuItem并跳转对应路由
   function menuItemClick({ key }) {
-    if(isExternal(key)) {
+    if (isExternal(key)) {
       window.open(key)
     } else {
       router.push({ path: key })

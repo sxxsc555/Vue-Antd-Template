@@ -6,7 +6,7 @@
 import { defineComponent, reactive, toRefs } from 'vue'
 
 export default defineComponent({
-  name: 'one6',
+  name: 'One6',
   setup() {
     const data = reactive({
       name: 'one6'
@@ -15,7 +15,7 @@ export default defineComponent({
     return {
       ...toRefs(data)
     }
-  },
+  }
 })
 </script>
 

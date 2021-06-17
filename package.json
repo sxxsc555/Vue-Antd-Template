@@ -22,6 +22,8 @@
     "@vitejs/plugin-vue": "^1.2.1",
     "@vue/compiler-sfc": "^3.0.5",
     "babel-plugin-import": "^1.13.3",
+    "eslint": "^7.28.0",
+    "eslint-plugin-vue": "^7.11.1",
     "sass": "^1.32.12",
     "svg-sprite-loader": "^6.0.6",
     "svgo": "^2.3.0",

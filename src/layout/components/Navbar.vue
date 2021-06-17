@@ -1,14 +1,14 @@
 <template>
   <div class="Navbar-container">
     <div class="Navbar-left">
-      <Hamburger :isActive="isActive" @toggleClick="toggleClick" />
+      <Hamburger :is-active="isActive" @toggleClick="toggleClick" />
     </div>
 
     <div class="Navbar-right"><strong>Vue Antd admin</strong></div>
-    
+
     <div class="Navbar-right">
       <a-button
-       type="link"
+        type="link"
         block
         :loading="btnLoading"
         @click="loginOffMethod"
@@ -33,7 +33,7 @@ export default defineComponent({
   setup() {
     const { isActive, toggleClick, toggleWatch } = toggle()
     toggleWatch()
-    
+
     const { btnLoading, loginOffMethod } = loginOff()
 
     return {
@@ -47,7 +47,7 @@ export default defineComponent({
 
 function toggle() {
   const store = useStore()
-  let isActive = ref(false)
+  const isActive = ref(false)
 
   async function toggleClick() {
     /* 切换菜单状态 */
@@ -58,7 +58,7 @@ function toggle() {
   function toggleWatch() {
     // 监听device并切换菜单状态
     watch(() => store.getters.device, async(newVal) => {
-      if(newVal === 'mobile' && !store.getters.sidebar.opened) {
+      if (newVal === 'mobile' && !store.getters.sidebar.opened) {
         await store.dispatch('app/toggleSidebar')
         isActive.value = true
       }
@@ -75,7 +75,7 @@ function toggle() {
 function loginOff() {
   const router = useRouter()
   const store = useStore()
-  let btnLoading = ref(false)
+  const btnLoading = ref(false)
 
   /* 注销 */
   async function loginOffMethod() {

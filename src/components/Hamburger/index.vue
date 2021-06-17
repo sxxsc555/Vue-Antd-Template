@@ -20,7 +20,7 @@ export default defineComponent({
   props: {
     isActive: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
   setup(props, { emit }) {

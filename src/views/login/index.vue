@@ -8,7 +8,7 @@
       :rules="rules"
     >
       <a-form-item>
-        <img src="@/assets/icons/svg/logo.svg" style="width: 50px;" />
+        <img src="@/assets/icons/svg/logo.svg" style="width: 50px;">
         <h1 class="login-title">Vue Antd Template</h1>
         <span class="login-subTitle">欢迎！</span>
       </a-form-item>
@@ -22,7 +22,7 @@
       </a-form-item>
 
       <a-form-item name="checkbox">
-        <a-checkbox v-model:checked="formState.checkbox">记住密码</a-checkbox>
+        <a-checkbox :checked="formState.checkbox">记住密码</a-checkbox>
       </a-form-item>
 
       <a-form-item>

@@ -10,7 +10,7 @@ const state = {
 const mutations = {
   TOGGLE_SIDEBAR: state => {
     state.sidebar.opened = !state.sidebar.opened
-    if(state.sidebar.opened) {
+    if (state.sidebar.opened) {
       setToken('sidebarStatus', 1)
     } else {
       setToken('sidebarStatus', 0)
