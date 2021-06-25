@@ -40,8 +40,7 @@ function onForm() {
     formRef.value
       .validate()
       .then((res: object) => {
-        console.log(res)
-        // store.dispatch('user/login', res)
+        store.dispatch('user/login', res)
         router.push({ path: '/' })
       })
       .catch((error: ValidateErrorEntity<formStateTypes>) => {
