@@ -1,45 +1,39 @@
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { setToken, getToken, removeToken } from '@/utils/cookie'
 import { resetRouter } from '@/router'
 
 const state = {
-  token: getToken()
+  token: getToken('token')
 }
 
 const mutations = {
-  RESET_STATE: (state) => {
-    Object.assign(state, state)
-  },
   SET_TOKEN: (state, token) => {
     state.token = token
   },
-
+  RESET_STATE: (state) => {
+    Object.assign(state, state)
+  }
 }
 
 const actions = {
-  // 登录
-  login({ commit }, userinfo) {
-    const { username, password } = userinfo
+  /* 登录 */
+  login({ commit }, userInfo) {
+    const { username, password } = userInfo
+
     return new Promise((resolve, reject) => {
-      if(username === 'admin' && password === '123456') {
-        commit('SET_TOKEN', username)
-        setToken(username)
-        resolve()
-      } else {
-        reject()
-      }
+      commit('SET_TOKEN', username)
+      setToken('token', username)
+      resolve()
     })
   },
 
-  // 注销
-  logout({ commit, state }) {
+  /* 注销 */
+  logout({commit, state}) {
     return new Promise((resolve, reject) => {
       if(state.token) {
-        removeToken()
+        removeToken('token')
         resetRouter()
         commit('RESET_STATE')
         resolve()
-      } else {
-        reject()
       }
     })
   }

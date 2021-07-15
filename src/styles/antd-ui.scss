@@ -1,24 +1,11 @@
-$Global-Bg-Color: #FFFFFF !important;
-$Global-Padding: 0 20px !important;
+// .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
+//   border-right: none !important;
+// }
 
-// 侧边栏
-.ant-menu {
-  border-right: 0px !important;
+.ant-menu-item-group-title {
+  display: none !important;
 }
 
-// 侧边栏子菜单
-.ant-menu-item {
-  height: 45px !important;
-  line-height: 45px !important;
-}
-
-.ant-layout-header {
-  background: $Global-Bg-Color;
-  padding: $Global-Padding;
-}
-
-// 骨架屏
-.ant-skeleton {
-  padding: 20px;
-  height: calc(20vh);
+.ant-menu-inline-collapsed > .ant-menu-item, .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item, .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
+  padding: 0;
 }

@@ -1,19 +1,15 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import layout from '@/layout'
-
-Vue.use(Router)
+import { createRouter, createWebHashHistory } from 'vue-router'
+import layout from '@/layout/index.vue'
 
 export const constantRoutes = [
   {
-    path: '/login',
-    component: () => import('@/views/login'),
+    path: '/404',
+    component: () => import('@/views/404/index.vue'),
     hidden: true
   },
-
   {
-    path: '/404',
-    component: () => import('@/views/404'),
+    path: '/login',
+    component: () => import('@/views/login/index.vue'),
     hidden: true
   },
 
@@ -25,10 +21,10 @@ export const constantRoutes = [
       {
         path: 'home',
         name: 'Home',
-        component: () => import('@/views/home'),
+        component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
-          icon: 'mail'
+          icon: 'logo'
         }
       }
     ]
@@ -41,23 +37,22 @@ export const constantRoutes = [
     redirect: '/one/one1',
     meta: {
       title: '第一个',
-      icon: 'mail'
+      icon: 'logo'
     },
     children: [
       {
         path: 'one1',
         name: 'One1',
-        component: () => import('@/views/one/components/index1'),
+        component: () => import('@/views/one/one1/index.vue'),
         meta: {
           title: 'One1',
           icon: ''
         }
       },
-
       {
         path: 'one2',
         name: 'One2',
-        component: () => import('@/views/one/components/index2'),
+        component: () => import('@/views/one/one2/index.vue'),
         meta: {
           title: 'One2',
           icon: ''
@@ -70,49 +65,65 @@ export const constantRoutes = [
     path: '/two',
     name: 'Two',
     component: layout,
-    redirect: '/two/two1',
+    redirect: '/two/one3',
     meta: {
       title: '第二个',
-      icon: 'mail'
+      icon: 'logo'
     },
     children: [
       {
-        path: 'two1',
-        name: 'Two1',
-        component: () => import('@/views/two/components/index1'),
+        path: 'one3',
+        name: 'One3',
+        component: () => import('@/views/two/one3/index.vue'),
         meta: {
-          title: 'Two1',
+          title: 'One3',
           icon: ''
         }
       },
-
       {
-        path: 'two2',
-        name: 'Two2',
-        component: () => import('@/views/two/components/index2'),
+        path: 'one4',
+        name: 'One4',
+        redirect: '/two/one4/one5',
+        component: () => import('@/views/two/one4/index.vue'),
         meta: {
-          title: 'Two2',
-          icon: ''
-        }
+          title: '第一个',
+          icon: 'logo'
+        },
+        children: [
+          {
+            path: 'one5',
+            name: 'One5',
+            component: () => import('@/views/two/one4/one5/index.vue'),
+            meta: {
+              title: 'One5',
+              icon: ''
+            }
+          },
+          {
+            path: 'one6',
+            name: 'One6',
+            component: () => import('@/views/two/one4/one6/index.vue'),
+            meta: {
+              title: 'One6',
+              icon: ''
+            }
+          }
+        ]
       }
     ]
   },
 
-  { path: '*', redirect: '/404', hidden: true }
+  { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
 
-const createRouter = () => new Router({
-  scrollBehavior: () => ({
-    y: 0
-  }),
+const router = createRouter({
+  history: createWebHashHistory(),
   routes: constantRoutes
 })
 
-const router = createRouter()
-
 export function resetRouter() {
-  const newRouter = createRouter()
-  router.matcher = newRouter.matcher
+  const newRouter = router
+  router.resolve = newRouter.resolve
 }
 
 export default router

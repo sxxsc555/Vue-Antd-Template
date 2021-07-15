@@ -1,30 +1,23 @@
-import Vue from 'vue'
-import App from './App'
+import { createApp } from 'vue'
+import App from './App.vue'
 import store from './store'
 import router from './router'
-
-// 引入全局样式
-import '@/styles/index.scss'
-import '@/styles/antd-ui.scss'
-
-// 引入ant-design
-import AntDesignVue from 'ant-design-vue'
+import { Button, Form, Checkbox, Input, Select, Menu } from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
-Vue.use(AntDesignVue)
+import './permission'
+import svgIcon from './components/SvgIcon/index.vue'
 
-// 引入G2图表
-import * as G2 from '@antv/g2'
-Vue.use(G2)
+const app = createApp(App)
 
-// 引入路由守卫
-import '@/permission'
+app.config.productionTip = false
+app.use(router)
 
-Vue.config.productionTip = false
-
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  store,
-  router,
-  render: h => h(App)
+// 等待路由读取完挂载页面
+router.isReady().then(() => {
+  app.use(store)
+  app.use(Button).use(Form).use(Checkbox).use(Input).use(Form).use(Select).use(Select).use(Menu)
+  app.component('svg-icon', svgIcon)
+  app.mount('#app')
 })
+
+export default app

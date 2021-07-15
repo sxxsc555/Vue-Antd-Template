@@ -1,15 +1,15 @@
 <template>
-  <div class="home-container">{{ name }}</div>
+  <div class="one1-container">{{ name }}</div>
 </template>
 
 <script>
 import { defineComponent, reactive, toRefs } from 'vue'
 
 export default defineComponent({
-  name: 'home',
+  name: 'one1',
   setup() {
     const data = reactive({
-      name: 'home'
+      name: 'one1'
     })
 
     return {
@@ -20,5 +20,5 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.home-container {}
+.one1-container {}
 </style>
