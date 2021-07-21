@@ -9,6 +9,7 @@ interface formStateTypes {
   checkbox: boolean
 }
 
+// 表单初始化
 function onForm() {
   const router = useRouter()
   const store = useStore()
@@ -35,7 +36,7 @@ function onForm() {
     ]
   }
 
-  /* 登录按钮 */
+  // 登录按钮
   function onSubmit() {
     formRef.value
       .validate()

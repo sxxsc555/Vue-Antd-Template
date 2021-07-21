@@ -12,7 +12,7 @@ import { isExternal } from '@/utils/validate'
 export default defineComponent({
   name: 'SvgIcon',
   props: {
-    iconClass: {
+    iconName: {
       type: String,
       required: true
     },
@@ -22,19 +22,19 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const external = computed(() => isExternal(props.iconClass))
-    const iconName = computed(() => `#icon-${props.iconClass}`)
+    const external = computed(() => isExternal(props.iconName))
+    const iconName = computed(() => `#icon-${props.iconName}`)
     const svgClass = computed(() => {
-      if(props.className) {
-        return 'svg-icon' + props.className
+      if (props.className) {
+        return 'svg-icon' + ' ' + props.className
       } else {
         return 'svg-icon'
       }
     })
     const externalStyle = computed(() => {
       return {
-        mask: `url(${props.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`
+        mask: `url(${props.iconName}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${props.iconName}) no-repeat 50% 50%`
       }
     })
 
@@ -50,15 +50,14 @@ export default defineComponent({
 
 <style lang="scss">
 .svg-icon {
-  width: 2rem;
-  height: 2rem;
-  vertical-align: -0.5rem;
+  width: 4rem;
+  height: 4rem;
   fill: currentColor;
   overflow: hidden;
 }
 
 .external-icon {
-  background-color: currentColor;
+  background: currentColor;
   mask-size: cover !important;
   display: inline-block;
 }

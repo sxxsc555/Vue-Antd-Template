@@ -14,5 +14,15 @@ export default defineConfig({
   },
   server: {
     open: true
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 全局引入基本样式规范文件
+        additionalData: `
+          @import './src/styles/standard-style.scss';
+        `
+      }
+    }
   }
 })

@@ -92,6 +92,6 @@ export default defineComponent({
 }
 
 .ant-input {
-  background-color: rgba(#ffffff, .6);
+  background: rgba(#ffffff, .6);
 }
 </style>
