@@ -1,0 +1,136 @@
+/*
+1. 适用于Web端
+2. 设计稿基于1920*1080屏幕设计
+3. 字体为中文：微软雅黑、英文： Arial，开发时请替换为系统默认字体
+*/
+
+/*
+品牌色
+*/
+/* 选中状态、选中状态文字、按钮、标签 */
+$brand-color: #4379ee;
+
+/*
+辅助色
+*/
+/* 侧边导航底色 */
+$auxiliary-color-dark: #273142;
+/* 用于页面不同数据信息展示 */
+$auxiliary-color-green: #61ddaa;
+/* 用于页面不同数据信息展示 */
+$auxiliary-color-orange: #fcc137;
+/* 用于页面不同数据信息展示 */
+$auxiliary-color-red: #ff4f4f;
+/* 用于页面不同数据信息展示 */
+$auxiliary-color-gray: #6C7FA0;
+
+/*
+标准文字颜色
+*/
+/* 重要级别的文字信息，表头、筛选框文字 */
+$content-color-major: #000000;
+/* 次重要级别文字，表头、筛选框文字等 */
+$content-color-submajor: #333333;
+/* 一般文字 */
+$content-color-normal: #666666;
+/* 未选中状态、文字提示 */
+$content-color-hint: #999999;
+/* 列表控件分割线 */
+$seperate-line-color: #e5e5e5;
+/* 背景色 */
+$background-color-major: #e4e8f5;
+/* 白色背景色 */
+$background-color-white: #ffffff;
+
+/*
+标准文字大小
+*/
+/* 导航标题 */
+$standard-font-size-larger: 2.4rem;
+/* 页面小标题 */
+$standard-font-size-large: 2rem;
+/* 左侧菜单栏文字、弹出框标题 */
+$standard-font-size-mid: 1.8rem;
+/* 大部分文字 */
+$standard-font-size-normal: 1.6rem;
+/* 提示类文字 */
+$standard-font-size-small: 1.4rem;
+/* 图标标注 */
+$standard-font-size-smaller: 1.2rem;
+
+/*
+标准边距大小
+*/
+$standard-padding: 20px;
+$standard-margin: 20px;
+$standard-padding-small: 10px;
+$standard-margin-small: 10px;
+
+/*
+标准边框样式
+*/
+$standard-border-radius: 3px;
+
+/**
+   * 'left-menu' 左侧菜单栏图标
+   * 'normal' 中等大小图标
+   * 'title' 标题类型大图标
+   * 'map-signatrue' 地图标识图标
+   * 'flat' 扁平图标
+   *  */
+@mixin icon-size($desc) {
+  @if $desc=='left-menu' {
+    height: 20px;
+    width: 20px;
+  }
+
+  @if $desc=='normal' {
+    height: 24px;
+    width: 24px;
+  }
+
+  @if $desc=='title' {
+    height: 38px;
+    width: 38px;
+  }
+
+  @if $desc=='map-signatrue' {
+    height: 45px;
+    width: 30px;
+  }
+
+  @if $desc=='flat' {
+    height: 8px;
+    width: 16px;
+  }
+}
+
+/* 主要按钮 */
+@mixin main-button-large {
+  background: linear-gradient(0, #5099ff, #4379ee);
+  height: 60px;
+  width: 380px;
+  border-radius: 10px;
+  font-size: $standard-font-size-larger;
+  color: #ffffff;
+}
+
+@mixin main-button-small {
+  background: linear-gradient(0, #4379ee, #4379ee);
+  height: 40px;
+  width: 90px;
+  border-radius: 5px;
+  font-size: $standard-font-size-normal;
+  color: #ffffff;
+}
+
+/* 搜索按钮 */
+@mixin search-input-large {
+  width: 220px;
+  height: 40px;
+}
+
+@mixin search-input-small {
+  width: 120px;
+  height: 40px;
+}
