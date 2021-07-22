@@ -3,22 +3,22 @@
     <menu-unfold-outlined
       v-if="collapsed"
       class="trigger"
-      @click="() => (collapsed = !collapsed)"
+      @click="changeCollapsed"
     />
-    <menu-fold-outlined v-else class="trigger" @click="() => (collapsed = !collapsed)" />
+    <menu-fold-outlined 
+      v-else class="trigger"
+      @click="changeCollapsed"
+    />
 
     <a-button :loading="loading" type="link" @click="logoutMethod">退出</a-button>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
-import {
-  MenuUnfoldOutlined,
-  MenuFoldOutlined
-} from '@ant-design/icons-vue'
+import { defineComponent } from 'vue'
+import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import logout from '@/hooks/common/logout'
+import header from '@/hooks/layout/header'
 
 export default defineComponent({
   name: 'Header',
@@ -28,36 +28,16 @@ export default defineComponent({
   },
   setup() {
     const { loading, logoutMethod } = logout()
+    const { collapsed, changeCollapsed } = header()
 
     return {
-      collapsed: ref<boolean>(false),
       loading,
-      logoutMethod
+      logoutMethod,
+      collapsed,
+      changeCollapsed
     }
   }
 })
-
-/* 注销 */
-function logout() {
-  const router = useRouter()
-  const store = useStore()
-  const loading = ref(false)
-
-  // 注销方法
-  async function logoutMethod() {
-    loading.value = true
-    await store.dispatch('user/logout')
-    setTimeout(() => {
-      loading.value = false
-      router.push({ path: '/login' })
-    }, 1000)
-  }
-
-  return {
-    loading,
-    logoutMethod
-  }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -65,11 +45,11 @@ function logout() {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 50px;
   background: white;
 
   .trigger {
     font-size: 18px;
-    line-height: 64px;
     padding: 0 24px;
     cursor: pointer;
     transition: color 0.3s;
