@@ -13,7 +13,8 @@ export default defineConfig({
     }
   },
   server: {
-    open: true
+    open: true,
+    host: '0.0.0.0'
   },
   css: {
     preprocessorOptions: {
