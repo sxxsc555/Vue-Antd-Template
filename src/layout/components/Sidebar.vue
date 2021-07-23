@@ -1,36 +1,62 @@
 <template>
   <div class="Sidebar-container">
     <div class="logo-box">
-      <svg-icon iconName="logo" className="logo" />
+      <svg-icon iconName="logo" />
       <span v-show="!collapsed">Vue-Antd-Ts！</span>
     </div>
 
-    <a-menu theme="dark" mode="inline" v-model:selectedKeys="selectedKeys">
-      <a-menu-item key="1">
-        <user-outlined />
-        <span>nav 1</span>
-      </a-menu-item>
+    <a-menu 
+      theme="dark"
+      mode="inline"
+      :selectedKeys="[route.path]"
+      :openKeys="openKeys"
+      @click="menuItemClick"
+      @openChange="onOpenChange"
+    >
+      <template v-for="route in routes" :key="route.path">
+        <SidebarItem :item="route" :path="route.path" />
+      </template>
     </a-menu>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
-import { UserOutlined } from '@ant-design/icons-vue'
+import { defineComponent, computed, toRefs } from 'vue'
 import sidebar from '@/hooks/layout/sidebar'
+import SidebarItem from './Sidebar-Item.vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'Sidebar',
   components: {
-    UserOutlined
+    SidebarItem
   },
   setup() {
-    const { collapsed, watchSidebar } = sidebar()
+    const route = useRoute()
+    const router = useRouter()
+    const routes = computed(() => router.options.routes)
+
+    const { 
+      state, 
+      getSubMenuKeys, 
+      getOpenKeys, 
+      getOpened, 
+      watchSidebar, 
+      onOpenChange, 
+      menuItemClick
+    } = sidebar()
+
+    getSubMenuKeys()
+    getOpenKeys()
+    getOpened()
     watchSidebar()
 
     return {
-      collapsed,
-      selectedKeys: ref<string[]>(['1'])
+      ...toRefs(state),
+      route,
+      routes,
+      onOpenChange,
+      menuItemClick
     }
   }
 })
@@ -42,7 +68,7 @@ export default defineComponent({
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 64px;
+    height: 54px;
     white-space:nowrap;
     overflow: hidden;
 
