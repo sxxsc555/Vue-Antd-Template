@@ -19,8 +19,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import { Sidebar, Header, Content } from './components'
+import layout from '@/hooks/layout'
 
 export default defineComponent({
   name: 'Layout',
@@ -30,8 +31,11 @@ export default defineComponent({
     Content
   },
   setup() {
+    const { collapsed, watchSidebar } = layout()
+    watchSidebar()
+
     return {
-      collapsed: ref<boolean>(false)
+      collapsed
     }
   }
 })
