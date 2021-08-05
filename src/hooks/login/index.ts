@@ -4,8 +4,8 @@ import { reactive, ref } from 'vue'
 import { ValidateErrorEntity } from 'ant-design-vue/es/form/interface'
 
 interface formStateTypes {
-  username: string,
-  password: string,
+  username: string
+  password: string
   checkbox: boolean
 }
 

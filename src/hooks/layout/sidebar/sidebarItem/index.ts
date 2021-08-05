@@ -1,12 +1,17 @@
 import { reactive } from 'vue'
 
+export interface stateTypes {
+  onlyOneChild: Array<string> | object
+  subMenus: Array<string>
+}
+
 function sidebarItem(props: any) {
-  const data = reactive({
+  const state: stateTypes = reactive({
     onlyOneChild: [],
     subMenus: []
   })
 
-  function resolvePath(routePath: any) {
+  function resolvePath(routePath: string) {
     let path = ''
 
     if(props.path.includes(routePath)) {
@@ -22,12 +27,12 @@ function sidebarItem(props: any) {
     return path
   }
 
-  function hasOneShowingChild(children = [], parent: any) {
-    const showChildren = children.filter((item) => {
-      if(item.meta.hidden) {
+  function hasOneShowingChild(children = [], parent: object) {
+    const showChildren = children.filter((item: any) => {
+      if(item.meta?.hidden) {
         return false
       } else {
-        data.onlyOneChild = item
+        state.onlyOneChild = item
         return true
       }
     })
@@ -37,7 +42,7 @@ function sidebarItem(props: any) {
     }
 
     if(showChildren.length === 0) {
-      data.onlyOneChild = {...parent, path: ''}
+      state.onlyOneChild = {...parent, path: ''}
       return true
     }
 
@@ -45,7 +50,7 @@ function sidebarItem(props: any) {
   }
 
   return {
-    data,
+    state,
     resolvePath,
     hasOneShowingChild
   }

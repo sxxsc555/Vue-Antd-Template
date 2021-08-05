@@ -2,7 +2,7 @@
   <div class="Sidebar-container">
     <div class="logo-box">
       <svg-icon iconName="logo" />
-      <span v-show="!collapsed">Vue-Antd-Ts！</span>
+      <span v-show="!collapsed">Vue-Antd-Template</span>
     </div>
 
     <a-menu 
@@ -23,7 +23,7 @@
 <script lang="ts">
 import { defineComponent, computed, toRefs } from 'vue'
 import sidebar from '@/hooks/layout/sidebar'
-import SidebarItem from './Sidebar-Item.vue'
+import SidebarItem from './SidebarItem.vue'
 import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
