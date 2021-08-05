@@ -29,7 +29,7 @@ function sidebar() {
   // 获取所有subMenuKey的数组
   function getSubMenuKeys() {
     router.options.routes.forEach((item) => {
-      if(item.children !== undefined) {
+      if(Array.isArray(item.children)){
         if(!item.meta?.hidden && item.children?.length > 1) {
           state.rootSubmenuKeys.push(item.path)
         }
