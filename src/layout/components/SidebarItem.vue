@@ -45,10 +45,10 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const { data, resolvePath, hasOneShowingChild } = sidebarItem(props)
+    const { state, resolvePath, hasOneShowingChild } = sidebarItem(props)
 
     return {
-      ...toRefs(data),
+      ...toRefs(state),
       resolvePath,
       hasOneShowingChild
     }

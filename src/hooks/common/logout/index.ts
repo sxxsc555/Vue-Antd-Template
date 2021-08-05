@@ -11,7 +11,7 @@ function logout() {
   // 注销方法
   async function logoutMethod() {
     loading.value = true
-    await store.dispatch('user/toggleSidebar')
+    await store.dispatch('user/logout')
     setTimeout(() => {
       loading.value = false
       router.push({ path: '/login' })

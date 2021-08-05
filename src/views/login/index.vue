@@ -9,7 +9,10 @@
     >
       <a-form-item>
         <img src="@/assets/icons/svg/logo.svg" style="width: 50px;" />
-        <h1 class="login-title">Vue Antd Template</h1>
+        <h1 class="login-title">
+          Vue Antd Template
+          <span style="color: #1890FF; font-size: 20px;">Ts</span>
+        </h1>
         <span class="login-subTitle">欢迎！</span>
       </a-form-item>
 
