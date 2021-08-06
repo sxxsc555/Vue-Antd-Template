@@ -6,7 +6,8 @@
       @click="changeCollapsed"
     />
     <menu-fold-outlined 
-      v-else class="trigger"
+      v-else 
+      class="trigger"
       @click="changeCollapsed"
     />
 
@@ -28,13 +29,14 @@ export default defineComponent({
   },
   setup() {
     const { loading, logoutMethod } = logout()
-    const { collapsed, changeCollapsed } = header()
+    const { collapsed, changeCollapsed, watchDevice } = header()
+    watchDevice()
 
     return {
       loading,
       logoutMethod,
       collapsed,
-      changeCollapsed
+      changeCollapsed,
     }
   }
 })

@@ -31,8 +31,9 @@ export default defineComponent({
     Content
   },
   setup() {
-    const { collapsed, watchSidebar } = layout()
+    const { collapsed, watchSidebar, watchWebView } = layout()
     watchSidebar()
+    watchWebView()
 
     return {
       collapsed
