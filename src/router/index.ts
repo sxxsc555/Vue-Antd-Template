@@ -37,7 +37,7 @@ const constantRoutes: Array<RouteRecordRaw> = [
     redirect: '/one/one1',
     meta: {
       title: '第一个',
-      icon: 'icon-qq'
+      icon: 'icon-qq',
     },
     children: [
       {

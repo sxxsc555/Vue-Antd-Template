@@ -68,7 +68,7 @@ function sidebar() {
 
   // 仅展开当前父级菜单
   function onOpenChange(openKeys: Array<string>) {
-    const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
+    let latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
 
     if(latestOpenKey !== undefined) {
       if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -77,6 +77,8 @@ function sidebar() {
         state.openKeys = latestOpenKey ? [latestOpenKey] : []
       }
     }
+
+    console.log(latestOpenKey)
   }
 
   // 获取当前点击menuItem并跳转对应路由

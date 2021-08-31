@@ -1,34 +1,36 @@
 import { reactive } from 'vue'
+import { isExternal } from '@/utils/validate'
 
 export interface stateTypes {
-  onlyOneChild: Array<string> | object
+  onlyOneChild: Array<string> | Object
   subMenus: Array<string>
 }
 
-function sidebarItem(props: any) {
+function sidebarItem(props: object | any) {
   const state: stateTypes = reactive({
     onlyOneChild: [],
     subMenus: []
   })
 
   function resolvePath(routePath: string) {
-    let path = ''
+    if (isExternal(routePath)) {
+      return routePath
+    }
 
-    if(props.path.includes(routePath)) {
-      path = props.path
+    if(!isExternal(props.path) && props.path.includes(routePath)) {
+      return props.path
     } else {
       if((routePath.indexOf('/') !== -1) || (props.path === '/')) {
-        path = props.path + routePath
+        return props.path + routePath
       } else {
-        path = props.path + '/' + routePath
+        return props.path + '/' + routePath
       }
     }
-    
-    return path
   }
 
   function hasOneShowingChild(children = [], parent: object) {
-    const showChildren = children.filter((item: any) => {
+    const showChildren = children.filter((item: object | any) => {
+      // 过滤掉隐藏的路由
       if(item.meta?.hidden) {
         return false
       } else {
@@ -36,13 +38,13 @@ function sidebarItem(props: any) {
         return true
       }
     })
-
+    
     if(showChildren.length === 1) {
       return true
     }
 
     if(showChildren.length === 0) {
-      state.onlyOneChild = {...parent, path: ''}
+      state.onlyOneChild = {...parent, path: '', noShowingChildren: true}
       return true
     }
 

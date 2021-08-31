@@ -1,17 +1,19 @@
 <template>
   <template v-if="!item.meta?.hidden">
     <!-- 只有一个菜单 -->
-      <template v-if="hasOneShowingChild(item.children, item)">
-        <a-menu-item :key="resolvePath(onlyOneChild.path)">
-          <IconFont :icon="onlyOneChild.meta.icon" />
-          <span>{{ onlyOneChild.meta.title }}</span>
-        </a-menu-item>
+      <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren)">
+        <template v-if="onlyOneChild.meta">
+          <a-menu-item :key="resolvePath(onlyOneChild.path)">
+            <IconFont :icon="onlyOneChild.meta.icon" />
+            <span>{{ onlyOneChild.meta.title }}</span>
+          </a-menu-item>
+        </template>
       </template>
 
       <!-- 含有多个子菜单 -->
       <template v-else>
         <a-sub-menu :key="resolvePath(item.path)">
-          <template #title>
+          <template v-if="item.meta" #title>
             <IconFont :icon="item.meta.icon" />
             <span>{{ item.meta.title }}</span>
           </template>
