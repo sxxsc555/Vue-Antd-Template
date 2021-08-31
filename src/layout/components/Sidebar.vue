@@ -31,6 +31,12 @@ export default defineComponent({
   components: {
     SidebarItem
   },
+  props: {
+    collapsed: {
+      type: Boolean,
+      require: true
+    }
+  },
   setup() {
     const route = useRoute()
     const router = useRouter()
@@ -38,17 +44,15 @@ export default defineComponent({
 
     const { 
       state, 
-      getSubMenuKeys, 
-      getOpenKeys, 
-      getOpened, 
-      watchSidebar, 
-      onOpenChange, 
+      getSubMenuKeys,
+      getOpenKeys,
+      watchSidebar,
+      onOpenChange,
       menuItemClick
     } = sidebar()
 
     getSubMenuKeys()
     getOpenKeys()
-    getOpened()
     watchSidebar()
 
     return {

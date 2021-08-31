@@ -4,7 +4,6 @@ import { useRouter, useRoute, RouteLocationMatched } from 'vue-router'
 import { isExternal } from '@/utils/validate'
 
 export interface stateTypes {
-  collapsed: boolean
   openKeys: Array<string>
   rootSubmenuKeys: Array<string>
 }
@@ -21,7 +20,6 @@ function sidebar() {
   const router = useRouter()
   const route = useRoute()
   const state: stateTypes = reactive({
-    collapsed: false,
     openKeys: [], // 当前展开的menu
     rootSubmenuKeys: [] // 所有可以被展开的menu
   })
@@ -46,16 +44,9 @@ function sidebar() {
     }
   }
 
-  // 获取缩起/展开状态
-  function getOpened() {
-    state.collapsed = store.getters.sidebar.opened
-  }
-
   // 监听sidebar并赋值
   function watchSidebar() {
     watch(() => store.getters.sidebar.opened, (newVal) => {
-      state.collapsed = newVal
-
       // 收起状态清空openKeys
       if(newVal) {
         state.openKeys.length = 0
@@ -68,7 +59,7 @@ function sidebar() {
 
   // 仅展开当前父级菜单
   function onOpenChange(openKeys: Array<string>) {
-    let latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
+    let latestOpenKey = openKeys.find((key) => state.openKeys.indexOf(key) === -1)
 
     if(latestOpenKey !== undefined) {
       if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
@@ -77,8 +68,6 @@ function sidebar() {
         state.openKeys = latestOpenKey ? [latestOpenKey] : []
       }
     }
-
-    console.log(latestOpenKey)
   }
 
   // 获取当前点击menuItem并跳转对应路由
@@ -96,7 +85,6 @@ function sidebar() {
     watchSidebar,
     getSubMenuKeys,
     getOpenKeys,
-    getOpened,
     onOpenChange,
     menuItemClick
   }

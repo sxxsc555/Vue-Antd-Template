@@ -9,7 +9,7 @@ export interface appTypes {
 
 const state: appTypes = {
   sidebar: {
-    opened: getToken('sidebarStatus') ? !!+getToken('sidebarStatus') : false
+    opened: getToken('sidebarStatus') ? !!+getToken('sidebarStatus') : true
   },
   device: 'desktop'
 }
@@ -23,6 +23,10 @@ const mutations = {
       setToken('sidebarStatus', '0')
     }
   },
+  CLOSE_SIDEBAR: (state: appTypes) => {
+    setToken('sidebarStatus', '0')
+    state.sidebar.opened = true
+  },
   TOGGLE_DEVICE: (state: appTypes, device: string) => {
     state.device = device
   }
@@ -33,7 +37,10 @@ const actions: ActionTree<appTypes, rootState> = {
   toggleSidebar({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },
-
+  /* 关闭菜单 */
+  closeSideBar({ commit }) {
+    commit('CLOSE_SIDEBAR')
+  },
   /* 设备类型 */
   toggleDevice({ commit }, device: string) {
     commit('TOGGLE_DEVICE', device)

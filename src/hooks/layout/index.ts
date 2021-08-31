@@ -1,4 +1,4 @@
-import { watch, ref } from 'vue'
+import { watch, ref, computed } from 'vue'
 import { useStore } from 'vuex'
 import webView from '@/hooks/common/webView'
 
@@ -13,18 +13,23 @@ function layout() {
     })
   }
 
+  function getCollapsed() {
+    collapsed.value = store.getters.sidebar.opened
+  }
+
   // 监听浏览器窗口变化并设置toggleDevice
   function watchWebView() {
     const { mobileType } = webView()
 
     watch(mobileType, (newVal) => {
-      collapsed.value = (newVal === 'mobile') ? true : false
       store.dispatch('app/toggleDevice', newVal)
+      newVal === 'mobile' ? store.dispatch('app/closeSideBar') : ''
     })
   }
 
   return {
     collapsed,
+    getCollapsed,
     watchSidebar,
     watchWebView
   }

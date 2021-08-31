@@ -2,12 +2,12 @@
   <div class="Layout-container">
     <a-layout>
       <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
-        <Sidebar />
+        <Sidebar :collapsed="collapsed" />
       </a-layout-sider>
 
       <a-layout>
         <a-layout-header>
-          <Header />
+          <Header :collapsed="collapsed" />
         </a-layout-header>
 
         <a-layout-content>
@@ -31,9 +31,11 @@ export default defineComponent({
     Content
   },
   setup() {
-    const { collapsed, watchSidebar, watchWebView } = layout()
+    const { collapsed, getCollapsed, watchSidebar, watchWebView } = layout()
     watchSidebar()
     watchWebView()
+    getCollapsed()
+    console.log(import.meta.env.VITE_APP_BASE_URL)
 
     return {
       collapsed

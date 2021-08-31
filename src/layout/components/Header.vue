@@ -27,15 +27,19 @@ export default defineComponent({
     MenuUnfoldOutlined,
     MenuFoldOutlined
   },
+  props: {
+    collapsed: {
+      type: Boolean,
+      require: true
+    }
+  },
   setup() {
     const { loading, logoutMethod } = logout()
-    const { collapsed, changeCollapsed, watchDevice } = header()
-    watchDevice()
+    const { changeCollapsed } = header()
 
     return {
       loading,
       logoutMethod,
-      collapsed,
       changeCollapsed,
     }
   }
