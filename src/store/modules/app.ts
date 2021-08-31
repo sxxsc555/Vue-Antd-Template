@@ -9,7 +9,7 @@ export interface appTypes {
 
 const state: appTypes = {
   sidebar: {
-    opened: getToken('sidebarStatus') ? !!+getToken('sidebarStatus') : true
+    opened: getToken('sidebarStatus') ? !!+getToken('sidebarStatus') : false
   },
   device: 'desktop'
 }
