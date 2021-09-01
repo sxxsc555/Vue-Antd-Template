@@ -1,11 +1,13 @@
 <template>
-  <div class="Sidebar-container" :class="{ 'toggleSidebar': collapsed }">
-    <logo :collapsed="collapsed" />
+  <div class="Sidebar-container">
+    <div class="logo-box">
+      <svg-icon iconName="logo" />
+      <span v-show="!collapsed">Vue-Antd-Template</span>
+    </div>
 
-    <a-menu
+    <a-menu 
+      theme="dark"
       mode="inline"
-      class="Sidebar-menu"
-      :inline-collapsed="collapsed"
       :selectedKeys="[route.path]"
       :openKeys="openKeys"
       @click="menuItemClick"
@@ -19,18 +21,22 @@
 </template>
 
 <script>
-import { computed, defineComponent, reactive, toRefs, watch, provide } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { defineComponent, computed, toRefs, reactive, watch } from 'vue'
 import { useStore } from 'vuex'
-import { isExternal } from '@/utils/validate.js'
-import logo from './logo.vue'
+import { useRouter, useRoute } from 'vue-router'
+import { isExternal } from '@/utils/validate'
 import SidebarItem from './SidebarItem.vue'
 
 export default defineComponent({
   name: 'Sidebar',
   components: {
-    logo,
     SidebarItem
+  },
+  props: {
+    collapsed: {
+      type: Boolean,
+      require: true
+    }
   },
   setup() {
     const route = useRoute()
@@ -39,19 +45,16 @@ export default defineComponent({
 
     const { 
       state, 
-      getSubMenuKeys, 
-      getOpenKeys, 
-      getOpened, 
-      watchSidebar, 
-      onOpenChange, 
+      getSubMenuKeys,
+      getOpenKeys,
+      watchSidebar,
+      onOpenChange,
       menuItemClick
-    } = menu()
-    
+    } = sidebar()
+
     getSubMenuKeys()
     getOpenKeys()
-    getOpened()
     watchSidebar()
-    provideCollapsed(state)
 
     return {
       ...toRefs(state),
@@ -63,13 +66,11 @@ export default defineComponent({
   }
 })
 
-/* 菜单方法集 */
-function menu() {
+function sidebar() {
+  const store = useStore()
   const router = useRouter()
   const route = useRoute()
-  const store = useStore()
   const state = reactive({
-    collapsed: false,
     openKeys: [], // 当前展开的menu
     rootSubmenuKeys: [] // 所有可以被展开的menu
   })
@@ -77,8 +78,10 @@ function menu() {
   // 获取所有subMenuKey的数组
   function getSubMenuKeys() {
     router.options.routes.forEach((item) => {
-      if(!item.hidden && item.children.length > 1) {
-        state.rootSubmenuKeys.push(item.path)
+      if(Array.isArray(item.children)){
+        if(!item.meta?.hidden && item.children?.length > 1) {
+          state.rootSubmenuKeys.push(item.path)
+        }
       }
     })
   }
@@ -92,16 +95,9 @@ function menu() {
     }
   }
 
-  // 获取缩起/展开状态
-  function getOpened() {
-    state.collapsed = store.getters.sidebar.opened
-  }
-
   // 监听sidebar并赋值
   function watchSidebar() {
     watch(() => store.getters.sidebar.opened, (newVal) => {
-      state.collapsed = newVal
-
       // 收起状态清空openKeys
       if(newVal) {
         state.openKeys.length = 0
@@ -114,12 +110,14 @@ function menu() {
 
   // 仅展开当前父级菜单
   function onOpenChange(openKeys) {
-    const latestOpenKey = openKeys.find(key => state.openKeys.indexOf(key) === -1)
+    let latestOpenKey = openKeys.find((key) => state.openKeys.indexOf(key) === -1)
 
-    if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      state.openKeys = openKeys
-    } else {
-      state.openKeys = latestOpenKey ? [latestOpenKey] : []
+    if(latestOpenKey !== undefined) {
+      if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        state.openKeys = openKeys
+      } else {
+        state.openKeys = latestOpenKey ? [latestOpenKey] : []
+      }
     }
   }
 
@@ -130,39 +128,36 @@ function menu() {
     } else {
       router.push({ path: key })
     }
+    router.push({ path: key })
   }
 
   return {
     state,
+    watchSidebar,
     getSubMenuKeys,
     getOpenKeys,
-    getOpened,
-    watchSidebar,
     onOpenChange,
     menuItemClick
   }
-}
-
-/* 推送collapsed值 */
-function provideCollapsed(state) {
-  provide('collapsed', computed(() => state.collapsed))
 }
 </script>
 
 <style lang="scss" scoped>
 .Sidebar-container {
-  position: fixed;
-  width: 18.1rem;
-  min-height: 100%;
-  overflow: hidden;
+  .logo-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 54px;
+    white-space:nowrap;
+    overflow: hidden;
 
-  &.toggleSidebar {
-    width: 7.9rem;
-  }
-
-  .Sidebar-menu {
-    height: 100%;
-    position: absolute;
+    span {
+      margin-left: 5px;
+      color: white;
+      font-weight: bold;
+      font-size: $standard-font-size-normal;
+    }
   }
 }
 </style>

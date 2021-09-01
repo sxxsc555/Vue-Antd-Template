@@ -1,11 +1,8 @@
-// .ant-menu-inline, .ant-menu-vertical, .ant-menu-vertical-left {
-//   border-right: none !important;
-// }
+.ant-layout {
+  height: 100%;
 
-.ant-menu-item-group-title {
-  display: none !important;
-}
-
-.ant-menu-inline-collapsed > .ant-menu-item, .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-item, .ant-menu-inline-collapsed > .ant-menu-item-group > .ant-menu-item-group-list > .ant-menu-submenu > .ant-menu-submenu-title, .ant-menu-inline-collapsed > .ant-menu-submenu > .ant-menu-submenu-title {
-  padding: 0;
+  .ant-layout-header {
+    padding: 0;
+    background: none;
+  }
 }

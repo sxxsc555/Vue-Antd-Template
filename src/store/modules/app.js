@@ -8,13 +8,17 @@ const state = {
 }
 
 const mutations = {
-  TOGGLE_SIDEBAR: state => {
+  TOGGLE_SIDEBAR: (state) => {
     state.sidebar.opened = !state.sidebar.opened
-    if(state.sidebar.opened) {
-      setToken('sidebarStatus', 1)
+    if (state.sidebar.opened) {
+      setToken('sidebarStatus', '1')
     } else {
-      setToken('sidebarStatus', 0)
+      setToken('sidebarStatus', '0')
     }
+  },
+  CLOSE_SIDEBAR: (state) => {
+    setToken('sidebarStatus', '0')
+    state.sidebar.opened = true
   },
   TOGGLE_DEVICE: (state, device) => {
     state.device = device
@@ -26,7 +30,10 @@ const actions = {
   toggleSidebar({ commit }) {
     commit('TOGGLE_SIDEBAR')
   },
-
+  /* 关闭菜单 */
+  closeSideBar({ commit }) {
+    commit('CLOSE_SIDEBAR')
+  },
   /* 设备类型 */
   toggleDevice({ commit }, device) {
     commit('TOGGLE_DEVICE', device)
