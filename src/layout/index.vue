@@ -35,7 +35,6 @@ export default defineComponent({
     watchSidebar()
     watchWebView()
     getCollapsed()
-    console.log(import.meta.env.VITE_APP_BASE_URL)
 
     return {
       collapsed

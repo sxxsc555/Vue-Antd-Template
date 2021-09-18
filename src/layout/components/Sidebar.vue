@@ -47,6 +47,7 @@ export default defineComponent({
       getSubMenuKeys,
       getOpenKeys,
       watchSidebar,
+      watchRoute,
       onOpenChange,
       menuItemClick
     } = sidebar()
@@ -54,6 +55,7 @@ export default defineComponent({
     getSubMenuKeys()
     getOpenKeys()
     watchSidebar()
+    watchRoute()
 
     return {
       ...toRefs(state),

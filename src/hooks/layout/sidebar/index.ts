@@ -57,6 +57,11 @@ function sidebar() {
     })
   }
 
+  // 监听route并赋值
+  function watchRoute() {
+    watch(route, () => getOpenKeys())
+  }
+
   // 仅展开当前父级菜单
   function onOpenChange(openKeys: Array<string>) {
     let latestOpenKey = openKeys.find((key) => state.openKeys.indexOf(key) === -1)
@@ -83,6 +88,7 @@ function sidebar() {
   return {
     state,
     watchSidebar,
+    watchRoute,
     getSubMenuKeys,
     getOpenKeys,
     onOpenChange,
