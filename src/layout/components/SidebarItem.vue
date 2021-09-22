@@ -4,7 +4,11 @@
       <template v-if="hasOneShowingChild(item.children, item) && (!onlyOneChild.children || onlyOneChild.noShowingChildren)">
         <template v-if="onlyOneChild.meta">
           <a-menu-item :key="resolvePath(onlyOneChild.path)">
-            <IconFont :icon="onlyOneChild.meta.icon" />
+            <template #icon>
+              <SvgIcon v-if="onlyOneChild.meta.svg" :iconName="onlyOneChild.meta.svg" className="svg" />
+              <IconFont v-if="onlyOneChild.meta.icon" :icon="onlyOneChild.meta.icon" />
+            </template>
+
             <span>{{ onlyOneChild.meta.title }}</span>
           </a-menu-item>
         </template>
@@ -12,9 +16,13 @@
 
       <!-- 含有多个子菜单 -->
       <template v-else>
-        <a-sub-menu :key="resolvePath(item.path)">
-          <template v-if="item.meta" #title>
-            <IconFont :icon="item.meta.icon" />
+        <a-sub-menu  v-if="item.meta" :key="resolvePath(item.path)">
+          <template #icon>
+            <SvgIcon v-if="item.meta.svg" :iconName="item.meta.svg" className="svg" />
+            <IconFont v-if="item.meta.icon" :icon="item.meta.icon" />
+          </template>
+
+          <template  #title>
             <span>{{ item.meta.title }}</span>
           </template>
 
@@ -30,11 +38,13 @@
 import { defineComponent, toRefs, reactive } from 'vue'
 import { isExternal } from '@/utils/validate'
 import IconFont from '@/components/IconFont/index.vue'
+import SvgIcon from '@/components/SvgIcon/index.vue'
 
 export default defineComponent({
   name: 'SidebarItem',
   components: {
-    IconFont
+    IconFont,
+    SvgIcon
   },
   props: {
     item: {
@@ -64,7 +74,7 @@ function sidebarItem(props) {
   })
 
   function resolvePath(routePath) {
-    if (isExternal(routePath)) {
+    if(isExternal(routePath)) {
       return routePath
     }
 
@@ -73,6 +83,8 @@ function sidebarItem(props) {
     } else {
       if((routePath.indexOf('/') !== -1) || (props.path === '/')) {
         return props.path + routePath
+      } else if(isExternal(props.path)) {
+        return props.path
       } else {
         return props.path + '/' + routePath
       }

@@ -1,16 +1,21 @@
 <template>
   <div class="Layout-container">
     <a-layout>
-      <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
+      <a-layout-sider 
+        v-model:collapsed="collapsed"
+        collapsible
+       :trigger="null"
+       :style="{ 'overflow-y': 'auto' }"
+      >
         <Sidebar :collapsed="collapsed" />
       </a-layout-sider>
 
       <a-layout>
-        <a-layout-header>
+        <a-layout-header :style="{ height: '50px' }">
           <Header :collapsed="collapsed" />
         </a-layout-header>
 
-        <a-layout-content>
+        <a-layout-content :style="{ overflow: 'auto' }">
           <Content />
         </a-layout-content>
       </a-layout>

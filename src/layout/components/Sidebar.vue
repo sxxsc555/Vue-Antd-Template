@@ -128,7 +128,6 @@ function sidebar() {
     } else {
       router.push({ path: key })
     }
-    router.push({ path: key })
   }
 
   return {

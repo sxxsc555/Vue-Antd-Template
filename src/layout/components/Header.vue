@@ -82,10 +82,11 @@ function logout() {
 
 <style lang="scss" scoped>
 .Header-container {
+  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 50px;
+  padding-right: 20px;
   background: white;
 
   .trigger {
