@@ -59,7 +59,7 @@ function sidebar() {
 
   // 监听route并赋值
   function watchRoute() {
-    watch(route, () => getOpenKeys())
+    watch(() => route.matched, () => getOpenKeys())
   }
 
   // 仅展开当前父级菜单

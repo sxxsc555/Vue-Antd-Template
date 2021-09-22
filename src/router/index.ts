@@ -24,7 +24,7 @@ const constantRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
-          icon: 'icon-qq'
+          svg: 'logo'
         }
       }
     ]
