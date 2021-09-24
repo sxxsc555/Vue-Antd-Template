@@ -5,12 +5,12 @@ export const constantRoutes = [
   {
     path: '/404',
     component: () => import('@/views/404/index.vue'),
-    hidden: true
+    meta: { hidden: true }
   },
   {
     path: '/login',
     component: () => import('@/views/login/index.vue'),
-    hidden: true
+    meta: { hidden: true }
   },
 
   {
@@ -24,7 +24,7 @@ export const constantRoutes = [
         component: () => import('@/views/home/index.vue'),
         meta: {
           title: '首页',
-          icon: 'logo'
+          svg: 'logo'
         }
       }
     ]
@@ -37,7 +37,7 @@ export const constantRoutes = [
     redirect: '/one/one1',
     meta: {
       title: '第一个',
-      icon: 'logo'
+      icon: 'icon-qq',
     },
     children: [
       {
@@ -46,7 +46,7 @@ export const constantRoutes = [
         component: () => import('@/views/one/one1/index.vue'),
         meta: {
           title: 'One1',
-          icon: ''
+          icon: 'icon-qq'
         }
       },
       {
@@ -55,7 +55,7 @@ export const constantRoutes = [
         component: () => import('@/views/one/one2/index.vue'),
         meta: {
           title: 'One2',
-          icon: ''
+          icon: 'icon-qq'
         }
       }
     ]
@@ -68,7 +68,7 @@ export const constantRoutes = [
     redirect: '/two/one3',
     meta: {
       title: '第二个',
-      icon: 'logo'
+      icon: 'icon-qq'
     },
     children: [
       {
@@ -77,7 +77,7 @@ export const constantRoutes = [
         component: () => import('@/views/two/one3/index.vue'),
         meta: {
           title: 'One3',
-          icon: ''
+          icon: 'icon-qq'
         }
       },
       {
@@ -87,7 +87,7 @@ export const constantRoutes = [
         component: () => import('@/views/two/one4/index.vue'),
         meta: {
           title: '第一个',
-          icon: 'logo'
+          icon: 'icon-qq'
         },
         children: [
           {
@@ -96,7 +96,7 @@ export const constantRoutes = [
             component: () => import('@/views/two/one4/one5/index.vue'),
             meta: {
               title: 'One5',
-              icon: ''
+              icon: 'icon-qq'
             }
           },
           {
@@ -105,7 +105,7 @@ export const constantRoutes = [
             component: () => import('@/views/two/one4/one6/index.vue'),
             meta: {
               title: 'One6',
-              icon: ''
+              icon: 'icon-qq'
             }
           }
         ]
@@ -113,7 +113,7 @@ export const constantRoutes = [
     ]
   },
 
-  { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
+  { path: '/:catchAll(.*)', redirect: '/404', meta: { hidden: true } }
 ]
 
 const router = createRouter({

@@ -1,103 +1,90 @@
 <template>
-  <div class="app-wrapper">
-    <Sidebar />
-    <div class="content-container" :class="{'toggleSidebar': toggleSidebar}">
-      <Navbar />
-      <Main />
-    </div>
+  <div class="Layout-container">
+    <a-layout>
+      <a-layout-sider 
+        v-model:collapsed="collapsed"
+        collapsible
+       :trigger="null"
+       :style="{ 'overflow-y': 'auto' }"
+      >
+        <Sidebar :collapsed="collapsed" />
+      </a-layout-sider>
+
+      <a-layout>
+        <a-layout-header :style="{ height: '50px' }">
+          <Header :collapsed="collapsed" />
+        </a-layout-header>
+
+        <a-layout-content :style="{ overflow: 'auto' }">
+          <Content />
+        </a-layout-content>
+      </a-layout>
+    </a-layout>
   </div>
 </template>
 
 <script>
-import { defineComponent, ref, watch, onBeforeMount, onMounted, onBeforeUnmount } from 'vue'
+import { defineComponent, watch, ref } from 'vue'
 import { useStore } from 'vuex'
-import { Navbar, Sidebar, Main } from './components'
+import webView from '@/utils/webView'
+import { Sidebar, Header, Content } from './components'
 
 export default defineComponent({
-  name: 'layout',
+  name: 'Layout',
   components: {
-    Navbar,
     Sidebar,
-    Main
+    Header,
+    Content
   },
   setup() {
-    // 监控窗口大小变化
-    watchWindow()
-
-    const { toggleSidebar } = onToggleSidebar()
+    const { collapsed, getCollapsed, watchSidebar, watchWebView } = layout()
+    watchSidebar()
+    watchWebView()
+    getCollapsed()
 
     return {
-      toggleSidebar
+      collapsed
     }
   }
 })
 
-function onToggleSidebar() {
+function layout() {
   const store = useStore()
-  let toggleSidebar = ref(store.getters.sidebar.opened)
+  const collapsed = ref(false)
+  
+  // 监听sidebar并切换菜单状态
+  function watchSidebar() {
+    watch(() => store.getters.sidebar.opened, (newVal) => {
+      collapsed.value = newVal
+    })
+  }
 
-  // 监听sidebar变化并赋值toggleSidebar
-  watch(() => store.getters.sidebar.opened, (newVal) => {
-    toggleSidebar.value = newVal
-  })
+  function getCollapsed() {
+    collapsed.value = store.getters.sidebar.opened
+  }
+
+  // 监听浏览器窗口变化并设置toggleDevice
+  function watchWebView() {
+    const { mobileType } = webView()
+
+    watch(mobileType, (newVal) => {
+      store.dispatch('app/toggleDevice', newVal)
+      newVal === 'mobile' ? store.dispatch('app/closeSideBar') : ''
+    })
+  }
 
   return {
-    toggleSidebar
-  }
-}
-
-function watchWindow() {
-  const store = useStore()
-
-  onBeforeMount(() => {
-    // 监听窗口大小变化
-    window.addEventListener('resize', () => resizeHandler())
-  })
-
-  onMounted(() => {
-    resizeHandler()
-  })
-
-  onBeforeUnmount(() => {
-    // 删除窗口监听器
-    window.removeEventListener('resize', () => resizeHandler())
-  })
-
-  // 判断窗口达到小窗宽度
-  function isMobile() {
-    const { body } = document
-    const Width = 992
-    const rect = body.getBoundingClientRect()
-    return rect.width - 1 < Width
-  }
-
-  // store保存当前窗口类型
-  function resizeHandler() {
-    if (!document.hidden) {
-      const IsMobile = isMobile()
-      store.dispatch('app/toggleDevice', IsMobile ? 'mobile' : 'desktop')
-    }
+    collapsed,
+    getCollapsed,
+    watchSidebar,
+    watchWebView
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.app-wrapper {
-  width: 100%;
+.Layout-container {
+  height: 100%;
   min-height: 100%;
-  display: flex;
-  flex-direction: row;
-
-  .content-container {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    margin-left: 18rem;
-    transition: margin-left .28s;
-
-    &.toggleSidebar {
-      margin-left: 8rem;
-    }
-  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div v-if="external" :style="externalStyle" class="svg-icon external-icon" v-bind="$attrs" />
   <svg v-else :class="svgClass" aria-hidden="true" v-bind="$attrs">
-    <use :xlink:href="iconName" />
+    <use :xlink:href="IconName" />
   </svg>
 </template>
 
@@ -12,7 +12,7 @@ import { isExternal } from '@/utils/validate'
 export default defineComponent({
   name: 'SvgIcon',
   props: {
-    iconClass: {
+    iconName: {
       type: String,
       required: true
     },
@@ -22,25 +22,25 @@ export default defineComponent({
     }
   },
   setup(props) {
-    const external = computed(() => isExternal(props.iconClass))
-    const iconName = computed(() => `#icon-${props.iconClass}`)
+    const external = computed(() => isExternal(props.iconName))
+    const IconName = computed(() => `#icon-${props.iconName}`)
     const svgClass = computed(() => {
-      if(props.className) {
-        return 'svg-icon' + props.className
+      if (props.className) {
+        return 'svg-icon' + ' ' + props.className
       } else {
         return 'svg-icon'
       }
     })
     const externalStyle = computed(() => {
       return {
-        mask: `url(${props.iconClass}) no-repeat 50% 50%`,
-        '-webkit-mask': `url(${props.iconClass}) no-repeat 50% 50%`
+        mask: `url(${props.iconName}) no-repeat 50% 50%`,
+        '-webkit-mask': `url(${props.iconName}) no-repeat 50% 50%`
       }
     })
 
     return {
       external,
-      iconName,
+      IconName,
       svgClass,
       externalStyle
     }
@@ -50,9 +50,9 @@ export default defineComponent({
 
 <style lang="scss">
 .svg-icon {
-  width: 2rem;
-  height: 2rem;
-  vertical-align: -0.5rem;
+  width: 1.6rem;
+  height: 1.6rem;
+  vertical-align: -0.2rem;
   fill: currentColor;
   overflow: hidden;
 }

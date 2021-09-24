@@ -14,6 +14,17 @@ export default defineConfig({
     }
   },
   server: {
-    open: true
+    open: true,
+    host: '0.0.0.0'
+  },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 全局引入基本样式规范文件
+        additionalData: `
+          @import './src/styles/standard-style.scss';
+        `
+      }
+    }
   }
 })
