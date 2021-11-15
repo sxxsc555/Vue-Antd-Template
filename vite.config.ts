@@ -7,7 +7,10 @@ const resolve = (dir) => path.join(__dirname, dir)
 
 export default defineConfig({
   base: './',
-  plugins: [vue(), svgBuilder('./src/assets/icons/svg/')],
+  plugins: [
+    vue(),
+    svgBuilder('./src/assets/icons/svg/')
+  ],
   resolve: {
     alias: {
       '@': resolve('src')
@@ -16,6 +19,9 @@ export default defineConfig({
   server: {
     open: true,
     host: '0.0.0.0'
+  },
+  build:{
+    brotliSize: false
   },
   css: {
     preprocessorOptions: {
