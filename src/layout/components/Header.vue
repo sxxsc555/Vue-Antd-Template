@@ -5,8 +5,8 @@
       class="trigger"
       @click="changeCollapsed"
     />
-    <menu-fold-outlined 
-      v-else 
+    <menu-fold-outlined
+      v-else
       class="trigger"
       @click="changeCollapsed"
     />
@@ -40,7 +40,7 @@ export default defineComponent({
     return {
       loading,
       logoutMethod,
-      changeCollapsed,
+      changeCollapsed
     }
   }
 })

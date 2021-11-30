@@ -21,7 +21,10 @@ export default defineConfig({
     host: '0.0.0.0'
   },
   build:{
-    brotliSize: false
+    outDir: 'dist',
+    assetsDir: 'assets',
+    brotliSize: false,
+    chunkSizeWarningLimit: 2000
   },
   css: {
     preprocessorOptions: {

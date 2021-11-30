@@ -1,7 +1,7 @@
 <template>
   <icon-font
     id="icon-font"
-    :type="icon" 
+    :type="icon"
     :style="{ 'font-size': fontSize + 'px', 'color': color }"
   />
 </template>

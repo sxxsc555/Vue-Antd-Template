@@ -1,15 +1,15 @@
 <template>
   <div class="Sidebar-container">
     <div class="logo-box">
-      <svg-icon iconName="logo" />
+      <svg-icon icon-name="logo" />
       <span v-show="!collapsed">Vue-Antd-Template</span>
     </div>
 
-    <a-menu 
+    <a-menu
       theme="dark"
       mode="inline"
-      :selectedKeys="[route.path]"
-      :openKeys="openKeys"
+      :selected-keys="[route.path]"
+      :open-keys="openKeys"
       @click="menuItemClick"
       @openChange="onOpenChange"
     >
@@ -42,8 +42,8 @@ export default defineComponent({
     const router = useRouter()
     const routes = computed(() => router.options.routes)
 
-    const { 
-      state, 
+    const {
+      state,
       getSubMenuKeys,
       getOpenKeys,
       watchSidebar,
