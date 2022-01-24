@@ -107,7 +107,7 @@ function onForm() {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url(../../assets/images/login_background.jpg);
+  background-image: url('../../assets/images/login_background.jpg');
   background-size: cover;
   background-position: center;
 
