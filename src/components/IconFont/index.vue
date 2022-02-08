@@ -1,12 +1,12 @@
 <template>
   <icon-font
     id="icon-font"
-    :type="icon" 
+    :type="icon"
     :style="{ 'font-size': fontSize + 'px', 'color': color }"
   />
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import { createFromIconfontCN } from '@ant-design/icons-vue'
 

@@ -1,7 +1,7 @@
-import { createRouter, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 import layout from '@/layout/index.vue'
 
-export const constantRoutes = [
+const constantRoutes: Array<RouteRecordRaw> = [
   {
     path: '/404',
     component: () => import('@/views/404/index.vue'),

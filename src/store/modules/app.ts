@@ -1,6 +1,13 @@
+import { ActionTree } from 'vuex'
 import { setToken, getToken } from '@/utils/cookie'
+import { rootState } from '@/store'
 
-const state = {
+export interface appTypes {
+  sidebar: { opened: boolean },
+  device: string
+}
+
+const state: appTypes = {
   sidebar: {
     opened: getToken('sidebarStatus') ? !!+getToken('sidebarStatus') : false
   },
@@ -8,7 +15,7 @@ const state = {
 }
 
 const mutations = {
-  TOGGLE_SIDEBAR: (state) => {
+  TOGGLE_SIDEBAR: (state: appTypes) => {
     state.sidebar.opened = !state.sidebar.opened
     if (state.sidebar.opened) {
       setToken('sidebarStatus', '1')
@@ -16,16 +23,16 @@ const mutations = {
       setToken('sidebarStatus', '0')
     }
   },
-  CLOSE_SIDEBAR: (state) => {
+  CLOSE_SIDEBAR: (state: appTypes) => {
     setToken('sidebarStatus', '0')
     state.sidebar.opened = true
   },
-  TOGGLE_DEVICE: (state, device) => {
+  TOGGLE_DEVICE: (state: appTypes, device: string) => {
     state.device = device
   }
 }
 
-const actions = {
+const actions: ActionTree<appTypes, rootState> = {
   /* 菜单状态 */
   toggleSidebar({ commit }) {
     commit('TOGGLE_SIDEBAR')
@@ -35,7 +42,7 @@ const actions = {
     commit('CLOSE_SIDEBAR')
   },
   /* 设备类型 */
-  toggleDevice({ commit }, device) {
+  toggleDevice({ commit }, device: string) {
     commit('TOGGLE_DEVICE', device)
   }
 }

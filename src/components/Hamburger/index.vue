@@ -12,7 +12,7 @@
   </svg>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 
 export default defineComponent({
@@ -20,7 +20,7 @@ export default defineComponent({
   props: {
     isActive: {
       type: Boolean,
-      default: false,
+      default: false
     }
   },
   setup(props, { emit }) {

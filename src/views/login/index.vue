@@ -8,8 +8,11 @@
       :rules="rules"
     >
       <a-form-item>
-        <img src="@/assets/icons/svg/logo.svg" style="width: 50px;" />
-        <h1 class="login-title">Vue Antd Template</h1>
+        <img src="@/assets/icons/svg/logo.svg" style="width: 50px;">
+        <h1 class="login-title">
+          Vue Antd Template
+          <span style="color: #1890FF; font-size: 20px;">Ts</span>
+        </h1>
         <span class="login-subTitle">欢迎！</span>
       </a-form-item>
 
@@ -32,10 +35,9 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, reactive, ref } from 'vue'
-import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import onForm from '@/hooks/login'
 
 export default defineComponent({
   setup() {
@@ -49,54 +51,6 @@ export default defineComponent({
     }
   }
 })
-
-function onForm() {
-  const router = useRouter()
-  const store = useStore()
-
-  const formRef = ref()
-  const formState = reactive({
-    username: '',
-    password: '',
-    checkbox: false
-  })
-  const rules = {
-    username: [
-      {
-        required: true,
-        message: '请输入用户名',
-        trigger: 'blur'
-      }
-    ],
-    password: [
-      {
-        required: true,
-        message: '请输入密码',
-        trigger: 'blur'
-      }
-    ]
-  }
-
-  /* 登录 */
-  function onSubmit() {
-    formRef.value
-      .validate()
-      .then((res) => {
-        store.dispatch('user/login', res)
-        router.push({ path: '/' })
-      })
-      .catch(error => {
-        console.log('error', error)
-      })
-  }
-
-  return {
-    formRef,
-    formState,
-    rules,
-    onSubmit
-  }
-}
 </script>
 
 <style lang="scss" scoped>
@@ -141,6 +95,6 @@ function onForm() {
 }
 
 .ant-input {
-  background-color: rgba(#ffffff, .6);
+  background: rgba(#ffffff, .6);
 }
 </style>

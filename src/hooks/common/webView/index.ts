@@ -1,7 +1,7 @@
 import { onBeforeMount, onMounted, onBeforeUnmount, ref } from 'vue'
 
 function webView() {
-  const mobileType = ref('')
+  const mobileType = ref<string>('')
 
   onBeforeMount(() => {
     // 监听窗口大小变化

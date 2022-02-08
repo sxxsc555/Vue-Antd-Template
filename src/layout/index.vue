@@ -1,21 +1,16 @@
 <template>
   <div class="Layout-container">
     <a-layout>
-      <a-layout-sider 
-        v-model:collapsed="collapsed"
-        collapsible
-       :trigger="null"
-       :style="{ 'overflow-y': 'auto' }"
-      >
+      <a-layout-sider v-model:collapsed="collapsed" :trigger="null" collapsible>
         <Sidebar :collapsed="collapsed" />
       </a-layout-sider>
 
       <a-layout>
-        <a-layout-header :style="{ height: '50px' }">
+        <a-layout-header>
           <Header :collapsed="collapsed" />
         </a-layout-header>
 
-        <a-layout-content :style="{ overflow: 'auto' }">
+        <a-layout-content>
           <Content />
         </a-layout-content>
       </a-layout>
@@ -23,11 +18,10 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, watch, ref } from 'vue'
-import { useStore } from 'vuex'
-import webView from '@/utils/webView'
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { Sidebar, Header, Content } from './components'
+import layout from '@/hooks/layout'
 
 export default defineComponent({
   name: 'Layout',
@@ -47,39 +41,6 @@ export default defineComponent({
     }
   }
 })
-
-function layout() {
-  const store = useStore()
-  const collapsed = ref(false)
-  
-  // 监听sidebar并切换菜单状态
-  function watchSidebar() {
-    watch(() => store.getters.sidebar.opened, (newVal) => {
-      collapsed.value = newVal
-    })
-  }
-
-  function getCollapsed() {
-    collapsed.value = store.getters.sidebar.opened
-  }
-
-  // 监听浏览器窗口变化并设置toggleDevice
-  function watchWebView() {
-    const { mobileType } = webView()
-
-    watch(mobileType, (newVal) => {
-      store.dispatch('app/toggleDevice', newVal)
-      newVal === 'mobile' ? store.dispatch('app/closeSideBar') : ''
-    })
-  }
-
-  return {
-    collapsed,
-    getCollapsed,
-    watchSidebar,
-    watchWebView
-  }
-}
 </script>
 
 <style lang="scss" scoped>

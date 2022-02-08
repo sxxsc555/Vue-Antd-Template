@@ -20,7 +20,7 @@ export default defineConfig({
     open: true,
     host: '0.0.0.0'
   },
-  build:{
+  build: {
     outDir: 'dist',
     assetsDir: 'assets',
     brotliSize: false,
@@ -45,6 +45,20 @@ export default defineConfig({
           @import './src/styles/standard-style.scss';
         `
       }
+    },
+    postcss: {
+      plugins: [
+        {
+          postcssPlugin: 'internal:charset-removal',
+          AtRule: {
+            charset: (atRule) => {
+              if (atRule.name === 'charset') {
+                atRule.remove()
+              }
+            }
+          }
+        }
+      ]
     }
   }
 })

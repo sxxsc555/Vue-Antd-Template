@@ -1,15 +1,15 @@
 <template>
   <div class="Sidebar-container">
     <div class="logo-box">
-      <svg-icon iconName="logo" />
+      <svg-icon icon-name="logo" />
       <span v-show="!collapsed">Vue-Antd-Template</span>
     </div>
 
-    <a-menu 
+    <a-menu
       theme="dark"
       mode="inline"
-      :selectedKeys="[route.path]"
-      :openKeys="openKeys"
+      :selected-keys="[route.path]"
+      :open-keys="openKeys"
       @click="menuItemClick"
       @openChange="onOpenChange"
     >
@@ -20,12 +20,11 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, computed, toRefs, reactive, watch } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter, useRoute } from 'vue-router'
-import { isExternal } from '@/utils/validate'
+<script lang="ts">
+import { defineComponent, computed, toRefs } from 'vue'
+import sidebar from '@/hooks/layout/sidebar'
 import SidebarItem from './SidebarItem.vue'
+import { useRouter, useRoute } from 'vue-router'
 
 export default defineComponent({
   name: 'Sidebar',
@@ -43,8 +42,8 @@ export default defineComponent({
     const router = useRouter()
     const routes = computed(() => router.options.routes)
 
-    const { 
-      state, 
+    const {
+      state,
       getSubMenuKeys,
       getOpenKeys,
       watchSidebar,
@@ -67,86 +66,6 @@ export default defineComponent({
     }
   }
 })
-
-function sidebar() {
-  const store = useStore()
-  const router = useRouter()
-  const route = useRoute()
-  const state = reactive({
-    openKeys: [], // 当前展开的menu
-    rootSubmenuKeys: [] // 所有可以被展开的menu
-  })
-  
-  // 获取所有subMenuKey的数组
-  function getSubMenuKeys() {
-    router.options.routes.forEach((item) => {
-      if(Array.isArray(item.children)){
-        if(!item.meta?.hidden && item.children?.length > 1) {
-          state.rootSubmenuKeys.push(item.path)
-        }
-      }
-    })
-  }
-
-  // 获取openKeys
-  function getOpenKeys() {
-    if(!store.getters.sidebar.opened) {
-      const matched = Object.create(route.matched)
-      matched.pop()
-      state.openKeys = matched.map((item) => item.path)
-    }
-  }
-
-  // 监听sidebar并赋值
-  function watchSidebar() {
-    watch(() => store.getters.sidebar.opened, (newVal) => {
-      // 收起状态清空openKeys
-      if(newVal) {
-        state.openKeys.length = 0
-      } else {
-        //  展开状态重新获取openKeys
-        getOpenKeys()
-      }
-    })
-  }
-
-  // 监听route并赋值
-  function watchRoute() {
-    watch(() => route.matched, () => getOpenKeys())
-  }
-
-  // 仅展开当前父级菜单
-  function onOpenChange(openKeys) {
-    let latestOpenKey = openKeys.find((key) => state.openKeys.indexOf(key) === -1)
-
-    if(latestOpenKey !== undefined) {
-      if (state.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-        state.openKeys = openKeys
-      } else {
-        state.openKeys = latestOpenKey ? [latestOpenKey] : []
-      }
-    }
-  }
-
-  // 获取当前点击menuItem并跳转对应路由
-  function menuItemClick({ key }) {
-    if(isExternal(key)) {
-      window.open(key)
-    } else {
-      router.push({ path: key })
-    }
-  }
-
-  return {
-    state,
-    watchSidebar,
-    watchRoute,
-    getSubMenuKeys,
-    getOpenKeys,
-    onOpenChange,
-    menuItemClick
-  }
-}
 </script>
 
 <style lang="scss" scoped>

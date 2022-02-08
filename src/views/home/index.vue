@@ -1,21 +1,12 @@
 <template>
-  <div class="home-container">{{ name }}</div>
+  <div class="home-container">home</div>
 </template>
 
 <script>
-import { defineComponent, reactive, toRefs } from 'vue'
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'home',
-  setup() {
-    const data = reactive({
-      name: 'home'
-    })
-
-    return {
-      ...toRefs(data)
-    }
-  },
+  name: 'Home'
 })
 </script>
 

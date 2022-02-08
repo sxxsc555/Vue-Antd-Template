@@ -4,9 +4,9 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, computed } from 'vue'
-import { useRoute } from 'vue-router'
+<script lang="ts">
+import { defineComponent } from 'vue'
+import content from '@/hooks/layout/content'
 
 export default defineComponent({
   name: 'Content',
@@ -19,21 +19,6 @@ export default defineComponent({
     }
   }
 })
-
-function content() {
-  function getKey() {
-    const route = useRoute()
-    const key = computed(() => route.path)
-
-    return {
-      key
-    }
-  }
-
-  return {
-    getKey
-  }
-}
 </script>
 
 <style lang="scss" scoped>

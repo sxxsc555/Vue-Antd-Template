@@ -5,8 +5,8 @@
       class="trigger"
       @click="changeCollapsed"
     />
-    <menu-fold-outlined 
-      v-else 
+    <menu-fold-outlined
+      v-else
       class="trigger"
       @click="changeCollapsed"
     />
@@ -15,11 +15,11 @@
   </div>
 </template>
 
-<script>
-import { defineComponent, ref } from 'vue'
-import { useStore } from 'vuex'
-import { useRouter } from 'vue-router'
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons-vue'
+import logout from '@/hooks/common/logout'
+import header from '@/hooks/layout/header'
 
 export default defineComponent({
   name: 'Header',
@@ -40,53 +40,18 @@ export default defineComponent({
     return {
       loading,
       logoutMethod,
-      changeCollapsed,
+      changeCollapsed
     }
   }
 })
-
-function header() {
-  const store = useStore()
-
-  async function changeCollapsed() {
-    await store.dispatch('app/toggleSidebar')
-  }
-
-  return {
-    changeCollapsed
-  }
-}
-
-/* 注销 */
-function logout() {
-  const router = useRouter()
-  const store = useStore()
-  const loading = ref(false)
-
-  // 注销方法
-  async function logoutMethod() {
-    loading.value = true
-    await store.dispatch('user/logout')
-    setTimeout(() => {
-      loading.value = false
-      router.push({ path: '/login' })
-    }, 1000)
-  }
-
-  return {
-    loading,
-    logoutMethod
-  }
-}
 </script>
 
 <style lang="scss" scoped>
 .Header-container {
-  height: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-right: 20px;
+  height: 50px;
   background: white;
 
   .trigger {

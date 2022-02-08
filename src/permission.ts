@@ -9,8 +9,8 @@ NProgress.configure({ showSpinner: false })// 设置圆圈进度条
 router.beforeEach((to, from, next) => {
   NProgress.start()// 开启进度条
 
-  const token = getToken('token')
-  const path = to.path
+  const token: string | undefined = getToken('token')
+  const path: string = to.path
 
   if(token) {
     if(path === '/login') {
