@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "vite",
     "build:prod": "vite build --mode production",
-    "serve": "vite preview"
+    "build:dev": "vite build --mode development",
+    "preview": "vite preview"
   },
   "dependencies": {
     "@antv/g2": "^4.1.16",
