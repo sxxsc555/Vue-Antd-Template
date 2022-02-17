@@ -1,5 +1,7 @@
 {
+  "name": "vue-antd-template",
   "version": "1.0.0",
+  "author": "chq",
   "scripts": {
     "dev": "vite",
     "build:prod": "vite build --mode production",
@@ -8,12 +10,12 @@
   },
   "dependencies": {
     "@antv/g2": "^4.1.16",
-    "ant-design-vue": "^2.2.2",
+    "ant-design-vue": "^2.2.8",
     "axios": "^0.21.1",
     "data-set": "^4.0.0",
     "js-cookie": "^2.2.1",
     "nprogress": "^0.2.0",
-    "vue": "^3.0.5",
+    "vue": "^3.2.25",
     "vue-router": "^4.0.6",
     "vuex": "^4.0.0"
   },
@@ -21,16 +23,16 @@
     "@types/js-cookie": "^2.2.6",
     "@types/node": "^15.12.2",
     "@types/nprogress": "^0.2.0",
-    "@vitejs/plugin-vue": "^1.2.3",
-    "@vue/compiler-sfc": "^3.0.5",
+    "@vitejs/plugin-vue": "^2.2.0",
+    "@vue/compiler-sfc": "^3.2.26",
     "babel-plugin-import": "^1.13.3",
+    "eslint": "^7.28.0",
+    "eslint-plugin-vue": "^7.11.1",
     "sass": "^1.32.12",
     "svg-sprite-loader": "^6.0.6",
-    "typescript": "^4.3.2",
-    "vite": "^2.3.7",
-    "vue-tsc": "^0.0.24",
-    "eslint": "^7.28.0",
-    "eslint-plugin-vue": "^7.11.1"
+    "typescript": "^4.5.4",
+    "vite": "^2.8.0",
+    "vue-tsc": "^0.29.8"
   },
   "engines": {
     "node": ">= 12.0.0",
